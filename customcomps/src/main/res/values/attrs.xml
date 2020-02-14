@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MyCustomButton">
+
+        <attr name="buttonTitle" format="string"/>
+        <attr name="buttonIcon" format="enum" >
+            <enum name="add" value="1"/>
+            <enum name="arrowdown" value="2"/>
+            <enum name="arrowright" value="3"/>
+            <enum name="date" value="4"/>
+            <enum name="delete" value="5"/>
+            <enum name="download" value="6"/>
+            <enum name="filter" value="7"/>
+            <enum name="list" value="8"/>
+            <enum name="refresh" value="9"/>
+            <enum name="save" value="10"/>
+            <enum name="settings" value="11"/>
+            <enum name="signal" value="12"/>
+            <enum name="sort" value="13"/>
+        </attr>
+    </declare-styleable>
+
+</resources>
