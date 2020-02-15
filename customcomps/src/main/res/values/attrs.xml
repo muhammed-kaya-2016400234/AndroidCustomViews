@@ -20,5 +20,11 @@
             <enum name="sort" value="13"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="UyumSpinner">
+        <attr name="WebServiceUrl" format="string"/>
+        <attr name="Namespace" format="string"/>
+        <attr name="MethodName" format="string"/>
+        <attr name="FieldToShow" format="string"/>
+    </declare-styleable>
 
 </resources>

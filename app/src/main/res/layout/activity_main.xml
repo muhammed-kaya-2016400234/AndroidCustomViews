@@ -8,11 +8,20 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="1dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.example.customcomps.MyCustomButton
             android:id="@+id/myCustomButton12"
@@ -36,18 +45,18 @@
             app:buttonIcon="filter" />
 
         <com.example.customcomps.MyCustomButton
-            android:id="@+id/myCustomButton16"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:text="com.example.customcomps.MyCustomButton"
-            app:buttonIcon="save" />
-
-        <com.example.customcomps.MyCustomButton
             android:id="@+id/myCustomButton17"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:text="com.example.customcomps.MyCustomButton"
             app:buttonIcon="list" />
+
+        <com.example.customcomps.UyumSpinner
+            android:id="@+id/uyumSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:MethodName="ListString"
+            app:WebServiceUrl="http://192.168.1.225/WebService1.asmx" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
