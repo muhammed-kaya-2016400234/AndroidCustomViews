@@ -4,18 +4,21 @@ import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
+import java.lang.reflect.Field;
+
 public class CustomSpinnerItem<T> {
 
-    Object item;
+    T item;
     String fieldname;
-    public CustomSpinnerItem(Object item,String fieldname){
+    public CustomSpinnerItem(T item,String fieldname){
         this.item=item;
         this.fieldname=fieldname;
     }
 
     public String toString(){
-        if(item instanceof SoapObject) {
-            if(fieldname!=null) {
+
+        if(item instanceof SoapObject){
+            if(fieldname!=null){
                 SoapObject element = (SoapObject) item;
                 for (int i = 0; i < element.getPropertyCount(); i++) {
                     PropertyInfo propertyInfo = element.getPropertyInfo(i);
@@ -27,6 +30,29 @@ public class CustomSpinnerItem<T> {
         }else if(item instanceof SoapPrimitive){
             return item.toString();
         }
-        return "";
+        else {
+            if (fieldname != null) {
+
+                Field[] fields = item.getClass().getFields();
+                for (Field field : fields) {
+                    if (field.getName().equals(fieldname)) {
+                        try {
+                            return field.get(item).toString();
+
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                            return "";
+                        }
+                    }
+                }
+                /*
+
+
+                 */
+            }
+        }
+        String retval=item.toString();
+            return retval;
+
     }
 }

@@ -25,6 +25,7 @@
         <attr name="Namespace" format="string"/>
         <attr name="MethodName" format="string"/>
         <attr name="FieldToShow" format="string"/>
+        <attr name="Label" format="string"/>
     </declare-styleable>
 
 </resources>

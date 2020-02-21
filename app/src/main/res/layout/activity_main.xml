@@ -54,9 +54,16 @@
         <com.example.customcomps.UyumSpinner
             android:id="@+id/uyumSpinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:MethodName="ListString"
+            android:layout_height="56dp"
+            app:FieldToShow="field1"
+            app:Label="deneme"
+            app:MethodName="ArrInt"
             app:WebServiceUrl="http://192.168.1.225/WebService1.asmx" />
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="58dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
