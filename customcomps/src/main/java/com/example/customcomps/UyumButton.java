@@ -129,7 +129,7 @@ public class UyumButton extends LinearLayoutCompat {
 
                 if(attr==R.styleable.UyumButton_buttonTitle){
                     title=typedArray.getString(attr);
-                    setMyTextTitle(title);
+                    setTitle(title);
                 }
                 else if(attr==R.styleable.UyumButton_buttonType){
                      type=typedArray.getInt(attr,1);
@@ -174,7 +174,7 @@ public class UyumButton extends LinearLayoutCompat {
 
     }
 
-    public void setMyTextTitle(String title){
+    public void setTitle(String title){
         if(title!=null) {
             this.title = title;
             button.setText(title);
@@ -185,7 +185,7 @@ public class UyumButton extends LinearLayoutCompat {
     public void setType(int type,String title){
         this.type=type;
         setMyIcon(null);
-        setMyTextTitle(title);
+        setTitle(title);
     }
 
     public void setMyIcon(Drawable d){
@@ -241,7 +241,7 @@ public class UyumButton extends LinearLayoutCompat {
 
                 }
                 if(title==null){
-                    setMyTextTitle(iconTitle);
+                    setTitle(iconTitle);
                 }
 
 

@@ -26,6 +26,7 @@ public class DateUtil {
 			}
 
 		}
+
 		return new Date(1900, 1, 1);
 	}
 	public static java.util.Date getDay(String str){

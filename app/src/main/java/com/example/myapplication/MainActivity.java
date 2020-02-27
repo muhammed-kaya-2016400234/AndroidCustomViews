@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.customcomps.UyumButton;
+import com.example.customcomps.UyumList;
 import com.example.customcomps.UyumSpinner;
 import com.example.myapplication.models.ArrInt;
 import com.example.myapplication.models.ListObject;
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     UyumButton btn;
     UyumButton tarihbutton;
     EditText editText;
+    UyumList listview;
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
         btn=findViewById(R.id.myCustomButton12);
         tarihbutton=findViewById(R.id.myCustomButton13);
         editText=findViewById(R.id.editText);
+        listview=findViewById(R.id.uyumList);
+        /*
 
+
+         */
         //tarihbutton.setEditText(editText);
 
         sp=findViewById(R.id.uyumSpinner);
@@ -81,8 +89,16 @@ public class MainActivity extends AppCompatActivity {
                 Date d=tarihbutton.getSelectedDate();
                 String date=tarihbutton.getSelectedDateString();
                 btn.setType(UyumButton.TARIH,"ileri");
+                listview.setItemOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        TextView textView=(TextView)view;
+                        Toast.makeText(getApplicationContext(),textView.getText(),Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
+
 
 
 

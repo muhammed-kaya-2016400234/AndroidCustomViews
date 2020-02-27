@@ -61,13 +61,11 @@
             app:MethodName="ArrInt"
             app:WebServiceUrl="http://192.168.1.232/WebService1.asmx" />
 
-        <EditText
-            android:id="@+id/editText"
+        <com.example.customcomps.UyumList
+            android:id="@+id/uyumList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Tarih" />
+            android:layout_height="228dp" />
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
