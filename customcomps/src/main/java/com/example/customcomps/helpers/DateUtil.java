@@ -10,6 +10,8 @@ public class DateUtil {
 	private static SimpleDateFormat dateFormatter = new SimpleDateFormat(FORMAT_DATE_ISO);
 	private static SimpleDateFormat parseFormat =
 			new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+	private static SimpleDateFormat dayFormat =
+			new SimpleDateFormat("dd/MM/yyyy");
 	public static java.util.Date getDate(String str){
 		try{
 			if(str != null && str.length() > 0)
@@ -23,6 +25,16 @@ public class DateUtil {
 				es.printStackTrace();
 			}
 
+		}
+		return new Date(1900, 1, 1);
+	}
+	public static java.util.Date getDay(String str){
+		try{
+			if(str != null && str.length() > 0)
+				return dayFormat.parse(str);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 		return new Date(1900, 1, 1);
 	}

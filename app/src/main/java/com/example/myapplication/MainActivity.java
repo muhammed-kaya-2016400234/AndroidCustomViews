@@ -7,21 +7,25 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 
-import com.example.customcomps.MyCustomButton;
+import com.example.customcomps.UyumButton;
 import com.example.customcomps.UyumSpinner;
+import com.example.myapplication.models.ArrInt;
 import com.example.myapplication.models.ListObject;
-import com.example.myapplication.models.ListString;
 import com.example.myapplication.models.WebService;
 
 import org.ksoap2.serialization.PropertyInfo;
 
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     UyumSpinner sp;
-    MyCustomButton btn;
+    UyumButton btn;
+    UyumButton tarihbutton;
+    EditText editText;
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +33,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btn=findViewById(R.id.myCustomButton12);
+        tarihbutton=findViewById(R.id.myCustomButton13);
+        editText=findViewById(R.id.editText);
+
+        //tarihbutton.setEditText(editText);
 
         sp=findViewById(R.id.uyumSpinner);
         sp.addParameter("asferw","a",PropertyInfo.STRING_CLASS);
-        ListObject.addMappings(sp.envelope);
+        ArrInt.addMappings(sp.envelope);
         //sp.setItemsFromWebService();
 
         new AsyncTask<String,Void,Void>() {
@@ -53,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
 
-                Object item= sp.getSelectedObjectField();
+                int item= sp.getSelectedInt();
                 int a=4;
             }
 
@@ -70,9 +78,14 @@ public class MainActivity extends AppCompatActivity {
                 //info.setValue("sdfwge");
                 //info.setName("a");
                 //info.setType(PropertyInfo.STRING_CLASS);
-
+                Date d=tarihbutton.getSelectedDate();
+                String date=tarihbutton.getSelectedDateString();
+                btn.setType(UyumButton.TARIH,"ileri");
             }
         });
+
+
+
 
     }
 

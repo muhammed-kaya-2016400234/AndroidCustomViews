@@ -23,48 +23,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.example.customcomps.MyCustomButton
+        <com.example.customcomps.UyumButton
             android:id="@+id/myCustomButton12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="com.example.customcomps.MyCustomButton"
-            app:buttonIcon="arrowdown" />
+            app:buttonType="arrowdown" />
 
-        <com.example.customcomps.MyCustomButton
+        <com.example.customcomps.UyumButton
             android:id="@+id/myCustomButton13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="com.example.customcomps.MyCustomButton"
-            app:buttonIcon="date" />
+            app:buttonType="date" />
 
-        <com.example.customcomps.MyCustomButton
+        <com.example.customcomps.UyumButton
             android:id="@+id/myCustomButton14"
             android:layout_width="match_parent"
             android:layout_height="51dp"
             android:text="com.example.customcomps.MyCustomButton"
-            app:buttonIcon="filter" />
+            app:buttonType="filter" />
 
-        <com.example.customcomps.MyCustomButton
+        <com.example.customcomps.UyumButton
             android:id="@+id/myCustomButton17"
             android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_height="51dp"
             android:text="com.example.customcomps.MyCustomButton"
-            app:buttonIcon="list" />
+            app:buttonType="list" />
 
         <com.example.customcomps.UyumSpinner
             android:id="@+id/uyumSpinner"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            app:FieldToShow="field1"
             app:FieldToReturn="field2"
+            app:FieldToShow="field1"
             app:Label="deneme"
-            app:MethodName="ListObject"
+            app:MethodName="ArrInt"
             app:WebServiceUrl="http://192.168.1.232/WebService1.asmx" />
 
-        <Spinner
-            android:id="@+id/spinner2"
+        <EditText
+            android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="58dp" />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Tarih" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

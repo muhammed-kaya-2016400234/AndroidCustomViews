@@ -12,16 +12,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.example.customcomps.helpers.DateUtil;
 
 import org.ksoap2.SoapEnvelope;
-import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
@@ -30,7 +27,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
-import java.util.jar.Attributes;
+
 
 public class UyumSpinner<T> extends LinearLayoutCompat {
 
@@ -91,19 +88,15 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
         }
     }
 
+
     public Object getSelectedObject(){
-       //CustomSpinnerItem item=(CustomSpinnerItem) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
        CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
        T val=item.item;
-       /*
-       if(val instanceof SoapPrimitive){
 
-           return (T)val.toString();
-       }
-
-        */
        return item.item;
     }
+
+    //returned value should be cast to int,string etc.
     public Object getSelectedObjectField(){
 
         if(FieldToReturn!=null){

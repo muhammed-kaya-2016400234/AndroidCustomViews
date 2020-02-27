@@ -1,32 +1,56 @@
 package com.example.customcomps;
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.LinearLayoutCompat;
+
+import com.example.customcomps.helpers.DateUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-public class MyCustomButton extends LinearLayoutCompat {
+public class UyumButton extends LinearLayoutCompat {
 
     public String title;
-    public int iconNum;
+    public int type;
     public ImageView icon;
     public Button button;
     ArrayList<Drawable> drawables = new ArrayList<>();
-    public MyCustomButton(Context context) {
+
+    public static int EKLE=1;
+    public static int ASAGI_OK=2;
+    public static int SAG_OK=3;
+    public static int TARIH=4;
+    public static int SIL=5;
+    public static int INDIR=6;
+    public static int FILTRE=7;
+    public static int LISTE=8;
+    public static int YENILE=9;
+    public static int KAYDET=10;
+    public static int AYARLAR=11;
+    public static int SINYAL=12;
+    public static int SIRALA=13;
+
+    public String date;
+    public EditText editText;
+
+    public UyumButton(Context context) {
         super(context);
         LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mInflater.inflate(R.layout.button_layout,this,true);
@@ -34,26 +58,40 @@ public class MyCustomButton extends LinearLayoutCompat {
         button=findViewById(R.id.button);
     }
 
-    public MyCustomButton(Context context, @Nullable AttributeSet attrs){
+    @SuppressLint("ClickableViewAccessibility")
+    public UyumButton(Context context, @Nullable AttributeSet attrs){
         super(context,attrs);
         this.setClickable(true);
         LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mInflater.inflate(R.layout.button_layout,this,true);
         icon=findViewById(R.id.imageView);
         button=findViewById(R.id.button);
+        editText=findViewById(R.id.editText);
+        Calendar takvim = Calendar.getInstance();
+        final int yil = takvim.get(Calendar.YEAR);
+        final int ay = takvim.get(Calendar.MONTH);
+        final int gun = takvim.get(Calendar.DAY_OF_MONTH);
+        final Context context1=context;
 
-        final Drawable background = this.getBackground();
+        date=getDateString(gun,ay,yil);
+        editText.setText(date);
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyCustomButton.this.performClick();
+                if(type==4){
+                    openDatePickerDialog(context1,yil,ay,gun);
+                }
+                UyumButton.this.performClick();
                 //clickAnimation();
             }
         });
         icon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyCustomButton.this.performClick();
+                if(type==4){
+                    openDatePickerDialog(context1,yil,ay,gun);
+                }
+                UyumButton.this.performClick();
                 //clickAnimation();
             }
         });
@@ -71,6 +109,7 @@ public class MyCustomButton extends LinearLayoutCompat {
                 return false;
             }
         });
+
         Field[] drawablesFields =R.drawable.class.getFields();
 
 
@@ -82,24 +121,24 @@ public class MyCustomButton extends LinearLayoutCompat {
             }
         }
 
-        TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.MyCustomButton);
+        TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.UyumButton);
         try{
             for(int i=0;i<typedArray.getIndexCount();i++){
 
                 int attr=typedArray.getIndex(i);
 
-                if(attr==R.styleable.MyCustomButton_buttonTitle){
+                if(attr==R.styleable.UyumButton_buttonTitle){
                     title=typedArray.getString(attr);
                     setMyTextTitle(title);
                 }
-                else if(attr==R.styleable.MyCustomButton_buttonIcon){
-                     iconNum=typedArray.getInt(attr,1);
+                else if(attr==R.styleable.UyumButton_buttonType){
+                     type=typedArray.getInt(attr,1);
                      setMyIcon(null);
                 }
 
             }
         }catch (Exception e){
-
+            e.printStackTrace();
         }finally {
             typedArray.recycle();
         }
@@ -136,67 +175,67 @@ public class MyCustomButton extends LinearLayoutCompat {
     }
 
     public void setMyTextTitle(String title){
-        this.title=title;
-        button.setText(title);
-
-    }
-/*
-    private void setMyStyle(){
-        if(this.style){
-            btn.setTextColor(Color.YELLOW);
-            btn.setTextSize(20f);
+        if(title!=null) {
+            this.title = title;
+            button.setText(title);
         }
+
     }
 
- */
-
+    public void setType(int type,String title){
+        this.type=type;
+        setMyIcon(null);
+        setMyTextTitle(title);
+    }
 
     public void setMyIcon(Drawable d){
             String iconTitle="";
             if(d!=null){
                 icon.setImageDrawable(d);
             }else {
-                //icon.setImageDrawable(drawables.get(this.iconNum));
+                //icon.setImageDrawable(drawables.get(this.type));
 
-                if (iconNum == 1) {
+                if (type == 1) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.add));
                     iconTitle="ekle";
-                }else if (iconNum == 2) {
+                }else if (type == 2) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.arrow_down));
                     iconTitle="aşağı";
-                }else if (iconNum == 3) {
+                }else if (type == 3) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.arrow_right));
                     iconTitle="git";
-                }else if (iconNum == 4) {
+                }else if (type == 4) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.date));
+                    editText.setVisibility(VISIBLE);
+                   // button.setVisibility(GONE);
                     iconTitle="tarih seç";
-                }else if (iconNum == 5) {
+                }else if (type == 5) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.delete));
                     iconTitle="temizle";
-                }else if (iconNum == 6) {
+                }else if (type == 6) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.download));
                     iconTitle="indir";
-                }else if (iconNum == 7) {
+                }else if (type == 7) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.filter));
                     iconTitle="filtrele";
-                }else if (iconNum == 8) {
+                }else if (type == 8) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.list));
                     iconTitle="listele";
-                }else if (iconNum == 9) {
+                }else if (type == 9) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.refresh));
                     iconTitle="yenile";
-                }else if (iconNum == 10) {
+                }else if (type == 10) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.save));
                     iconTitle="kaydet";
-                }else if (iconNum == 11) {
+                }else if (type == 11) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.settings));
                     iconTitle="ayarlar";
 
-                }else if (iconNum == 12) {
+                }else if (type == 12) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.signal));
                     iconTitle="bağlantı";
 
-                }else if (iconNum == 13) {
+                }else if (type == 13) {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.sort));
                     iconTitle="sırala";
 
@@ -210,5 +249,41 @@ public class MyCustomButton extends LinearLayoutCompat {
             }
             //setCompoundDrawablesWithIntrinsicBounds(null,null,mydr,null);
 
+    }
+    public Date getSelectedDate(){
+       return DateUtil.getDay(date);
+    }
+    public String getSelectedDateString(){
+        return date;
+    }
+    public void setEditText(EditText editText){
+        editText.setText(date);
+        this.editText=editText;
+    }
+    public void openDatePickerDialog(final Context context1,int yil,int ay,int gun){
+
+        DatePickerDialog dpd = new DatePickerDialog(context1, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                date=getDateString(dayOfMonth,month,year);
+                if(editText!=null){
+                    editText.setText(date);
+                }
+            }
+        }, yil, ay, gun);
+
+        dpd.setButton(DatePickerDialog.BUTTON_POSITIVE, "Seç", dpd);
+        dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "İptal", dpd);
+        dpd.show();
+    }
+
+    private static String getDateString(int dayOfMonth,int month,int year){
+        month += 1;
+        String temp=("0"+month);
+        String monthString=temp.substring(temp.length()-2);
+        temp="0"+dayOfMonth;
+        String dayString=temp.substring(temp.length()-2);
+        return dayString + "/" + monthString + "/" + year;
     }
 }

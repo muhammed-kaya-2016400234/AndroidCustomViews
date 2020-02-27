@@ -6,11 +6,20 @@
     android:background="@drawable/border"
     android:clickable="true">
 
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:ems="10"
+            android:inputType="date"
+            android:visibility="gone"
+            android:text="Name" />
         <Button
             android:id="@+id/button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:background="@android:color/transparent"
             android:text="Button"
 
@@ -18,10 +27,12 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"
+            android:layout_weight="1"
 
             app:srcCompat="@drawable/refresh" />
+
+
 
 </LinearLayout>

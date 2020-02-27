@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="MyCustomButton">
+    <declare-styleable name="UyumButton">
 
         <attr name="buttonTitle" format="string"/>
-        <attr name="buttonIcon" format="enum" >
+        <attr name="buttonType" format="enum" >
             <enum name="add" value="1"/>
             <enum name="arrowdown" value="2"/>
             <enum name="arrowright" value="3"/>
