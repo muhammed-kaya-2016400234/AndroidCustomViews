@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
+import com.example.customcomps.helpers.DateUtil;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.PropertyInfo;
@@ -23,6 +25,9 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.jar.Attributes;
@@ -37,6 +42,7 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
     public String Namespace="http://tempuri.org/";
     public String MethodName;
     public String FieldToShow;
+    public String FieldToReturn;
     public List<PropertyInfo> properties=new Vector<>();
     private Context context;
     public SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -69,6 +75,8 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
                     MethodName=typedArray.getString(attr);
                 }else if(attr==R.styleable.UyumSpinner_FieldToShow){
                     FieldToShow=typedArray.getString(attr);
+                }else if(attr==R.styleable.UyumSpinner_FieldToReturn){
+                    FieldToReturn=typedArray.getString(attr);
                 }else if(attr==R.styleable.UyumSpinner_Label){
                     //spinner.setPrompt(typedArray.getString(attr));
                     //labelTextView.setText(typedArray.getString(attr));
@@ -83,16 +91,80 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
         }
     }
 
-    public T getSelectedValue(){
+    public Object getSelectedObject(){
        //CustomSpinnerItem item=(CustomSpinnerItem) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
        CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
-       if(item.item instanceof SoapPrimitive){
-           return (T)item.item.toString();
+       T val=item.item;
+       /*
+       if(val instanceof SoapPrimitive){
+
+           return (T)val.toString();
        }
+
+        */
        return item.item;
     }
+    public Object getSelectedObjectField(){
+
+        if(FieldToReturn!=null){
+            CustomSpinnerItem<T> sel=(CustomSpinnerItem<T>) spinner.getSelectedItem();
+            Object item=sel.item;
+            if(item instanceof SoapObject){
+
+                    SoapObject element = (SoapObject) item;
+                    for (int i = 0; i < element.getPropertyCount(); i++) {
+                        PropertyInfo propertyInfo = element.getPropertyInfo(i);
+                        if (propertyInfo.name.equals(FieldToReturn)) {
+                            return propertyInfo.getValue();
+                        }
+                    }
+
+            }else {
+                Field[] fields = item.getClass().getFields();
+                for (Field field : fields) {
+                    if (field.getName().equals(FieldToReturn)) {
+                        try {
+                            return field.get(item);
+
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                            return "";
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
     public int getSelectedInt(){
-        return 0;
+        CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
+        T val=item.item;
+        return Integer.parseInt(val.toString());
+    }
+    public String getSelectedString(){
+        CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
+        T val=item.item;
+        return val.toString();
+    }
+    public boolean getSelectedBoolean(){
+        CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
+        T val=item.item;
+        return Boolean.parseBoolean(val.toString());
+    }
+    public double getSelectedDouble(){
+        CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
+        T val=item.item;
+        return Double.parseDouble(val.toString());
+    }
+    public BigDecimal getSelectedBigDecimal(){
+        CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
+        T val=item.item;
+        return new BigDecimal(val.toString());
+    }
+    public Date getSelectedDate(){
+        CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
+        T val=item.item;
+        return DateUtil.getDate(val.toString());
     }
 
 

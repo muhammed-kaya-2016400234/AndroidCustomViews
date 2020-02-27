@@ -1,5 +1,7 @@
 package com.example.customcomps;
 
+import androidx.annotation.NonNull;
+
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -14,6 +16,7 @@ public class CustomSpinnerItem<T> {
         this.item=item;
         this.fieldname=fieldname;
     }
+
 
     public String toString(){
 

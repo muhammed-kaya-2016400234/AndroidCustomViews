@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 
 import com.example.customcomps.MyCustomButton;
 import com.example.customcomps.UyumSpinner;
+import com.example.myapplication.models.ListObject;
 import com.example.myapplication.models.ListString;
 import com.example.myapplication.models.WebService;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    UyumSpinner<String> sp;
+    UyumSpinner sp;
     MyCustomButton btn;
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         sp=findViewById(R.id.uyumSpinner);
         sp.addParameter("asferw","a",PropertyInfo.STRING_CLASS);
-        //ListString.addMappings(sp.envelope);
+        ListObject.addMappings(sp.envelope);
         //sp.setItemsFromWebService();
 
         new AsyncTask<String,Void,Void>() {
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
 
-                String item= sp.getSelectedValue();
+                Object item= sp.getSelectedObjectField();
                 int a=4;
             }
 
@@ -74,4 +75,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }
