@@ -26,30 +26,31 @@
         <com.example.customcomps.UyumButton
             android:id="@+id/myCustomButton12"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="53dp"
             android:text="com.example.customcomps.MyCustomButton"
-            app:buttonType="arrowdown" />
+            app:ButtonType="arrowdown" />
 
         <com.example.customcomps.UyumButton
             android:id="@+id/myCustomButton13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="com.example.customcomps.MyCustomButton"
-            app:buttonType="date" />
+            app:ButtonType="date" />
 
         <com.example.customcomps.UyumButton
             android:id="@+id/myCustomButton14"
-            android:layout_width="match_parent"
-            android:layout_height="51dp"
+            android:layout_width="63dp"
+            android:layout_height="wrap_content"
             android:text="com.example.customcomps.MyCustomButton"
-            app:buttonType="filter" />
+            app:ButtonType="add"
+            app:ImageOnly="true" />
 
         <com.example.customcomps.UyumButton
             android:id="@+id/myCustomButton17"
             android:layout_width="match_parent"
-            android:layout_height="51dp"
+            android:layout_height="56dp"
             android:text="com.example.customcomps.MyCustomButton"
-            app:buttonType="list" />
+            app:ButtonType="list" />
 
         <com.example.customcomps.UyumSpinner
             android:id="@+id/uyumSpinner"
@@ -64,7 +65,14 @@
         <com.example.customcomps.UyumList
             android:id="@+id/uyumList"
             android:layout_width="match_parent"
-            android:layout_height="228dp" />
+            android:layout_height="228dp"
+            app:Selectable="AllowSingleSelection" />
+
+        <com.example.customcomps.CustomListItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:TypeOfButton="add"
+            app:WithButton="true"/>
 
 
     </LinearLayout>

@@ -33,19 +33,7 @@ public class UyumButton extends LinearLayoutCompat {
     public Button button;
     ArrayList<Drawable> drawables = new ArrayList<>();
 
-    public static int EKLE=1;
-    public static int ASAGI_OK=2;
-    public static int SAG_OK=3;
-    public static int TARIH=4;
-    public static int SIL=5;
-    public static int INDIR=6;
-    public static int FILTRE=7;
-    public static int LISTE=8;
-    public static int YENILE=9;
-    public static int KAYDET=10;
-    public static int AYARLAR=11;
-    public static int SINYAL=12;
-    public static int SIRALA=13;
+
 
     public String date;
     public EditText editText;
@@ -127,15 +115,17 @@ public class UyumButton extends LinearLayoutCompat {
 
                 int attr=typedArray.getIndex(i);
 
-                if(attr==R.styleable.UyumButton_buttonTitle){
+                if(attr==R.styleable.UyumButton_ButtonTitle){
                     title=typedArray.getString(attr);
                     setTitle(title);
                 }
-                else if(attr==R.styleable.UyumButton_buttonType){
+                else if(attr==R.styleable.UyumButton_ButtonType){
                      type=typedArray.getInt(attr,1);
                      setMyIcon(null);
                 }
-
+                else if(attr==R.styleable.UyumButton_ImageOnly){
+                    setImageOnly(typedArray.getBoolean(attr,false));
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -188,6 +178,14 @@ public class UyumButton extends LinearLayoutCompat {
         setTitle(title);
     }
 
+    public void setImageOnly(boolean imageOnly){
+        if(imageOnly){
+            editText.setVisibility(GONE);
+            button.setVisibility(GONE);
+        }else{
+            setMyIcon(null);
+        }
+    }
     public void setMyIcon(Drawable d){
             String iconTitle="";
             if(d!=null){
