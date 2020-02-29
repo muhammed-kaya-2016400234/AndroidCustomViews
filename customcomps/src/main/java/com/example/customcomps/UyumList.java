@@ -20,12 +20,13 @@ import java.util.Vector;
 public class UyumList<T> extends LinearLayoutCompat {
 
 
-    public static final int NO_SELECTION=1;
-    public static final int SINGLE_SELECTION=2;
-    public static final int MULTIPLE_SELECTION=3;
+    public static final int NO_SELECTION=0;
+    public static final int SINGLE_SELECTION=1;
+    public static final int MULTIPLE_SELECTION=2;
 
 
     public RecyclerView recyclerView;
+    public UyumButton clearButton;
     public RecyclerView.LayoutManager layoutManager;
     public MyAdapter<T> adapter;
     public UyumList(Context context) {
@@ -34,6 +35,7 @@ public class UyumList<T> extends LinearLayoutCompat {
         LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mInflater.inflate(R.layout.listview_layout,this,true);
         recyclerView=findViewById(R.id.recyclerview);
+        clearButton=findViewById(R.id.clearButton);
     }
 
 
@@ -43,6 +45,8 @@ public class UyumList<T> extends LinearLayoutCompat {
         LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mInflater.inflate(R.layout.listview_layout,this,true);
         recyclerView=findViewById(R.id.recyclerview);
+        clearButton=findViewById(R.id.clearButton);
+
         recyclerView.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
@@ -51,7 +55,7 @@ public class UyumList<T> extends LinearLayoutCompat {
         int selectionType=0;
         int buttonType=3;
         boolean itemsWithButton=false;
-
+        boolean showClearButon=true;
         TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.UyumList);
         try{
             for(int i=0;i<typedArray.getIndexCount();i++){
@@ -64,6 +68,8 @@ public class UyumList<T> extends LinearLayoutCompat {
                     buttonType=typedArray.getInt(attr,3);
                 }else if(attr==R.styleable.UyumList_ItemsWithButton){
                     itemsWithButton=typedArray.getBoolean(attr,false);
+                }else if(attr==R.styleable.UyumList_ShowClearButton){
+                    showClearButon=typedArray.getBoolean(attr,true);
                 }
 
             }
@@ -75,6 +81,18 @@ public class UyumList<T> extends LinearLayoutCompat {
         }
         adapter=new MyAdapter(new Vector<>(),selectionType,itemsWithButton,buttonType);
         recyclerView.setAdapter(adapter);
+        if(selectionType!=UyumList.NO_SELECTION&&showClearButon){
+            clearButton.setVisibility(VISIBLE);
+        }else{
+            clearButton.setVisibility(GONE);
+        }
+        clearButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearSelections();
+            }
+        });
+
 
     }
     public void setDataSet(List<T> dataSetList){
@@ -108,12 +126,20 @@ public class UyumList<T> extends LinearLayoutCompat {
     public T getSelectedObject(){
         return adapter.getSelectedObject();
     }
+    public List<T> getSelectedObjectsList(){
+        return adapter.getSelectedObjectsList();
+    }
     public int getSelectedIndex(){
         return adapter.getSelectedIndex();
     }
     public List<Integer> getSelectedIndices(){return adapter.getSelectedIndices();}
 
+
     public List<Integer> getButtonTypes(){return adapter.getButtonTypes();}
+
+    public void clearSelections(){
+         adapter.clearSelections();
+    }
 
     public void setFieldToShow(String fieldName){
         adapter.setFieldToShow(fieldName);

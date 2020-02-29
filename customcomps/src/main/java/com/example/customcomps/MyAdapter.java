@@ -42,7 +42,7 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     };
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-       CustomListItem customListItem;
+        CustomListItem customListItem;
         MyViewHolder(CustomListItem c) {
             super(c);
             customListItem =c;
@@ -53,8 +53,10 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.dataSet = dataSet;
         setSelectionType(selectionType);
         this.itemsWithButton=withButton;
-        if(buttonType!=null)
+        if(withButton&&buttonType!=null) {
+            defaultButtonType=buttonType;
             setButtonTypeForAll(buttonType);
+        }
     }
 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -197,6 +199,13 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         else return null;
 
     }
+    List<T> getSelectedObjectsList(){
+        List<T> list=new Vector<>();
+        for(int i: selectedIndices){
+           list.add(dataSet.get(i));
+        }
+        return list;
+    }
 
 
     int getSelectedIndex(){
@@ -205,6 +214,12 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     List<Integer> getSelectedIndices(){
         return selectedIndices;
     }
+    void clearSelections(){
+        selectedIndices.clear();
+        selectedPosition=-1;
+        notifyDataSetChanged();
+    }
+
     List<Integer> getButtonTypes(){
         return buttonTypes;
     }

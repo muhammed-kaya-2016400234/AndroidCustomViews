@@ -20,7 +20,7 @@ public class CustomListItem extends LinearLayoutCompat {
         View v=mInflater.inflate(R.layout.custom_list_item_layout, this, true);
         textView=findViewById(R.id.list_item);
         button=findViewById(R.id.right_Button);
-        LayoutParams layoutParams=new LayoutParams(LayoutParams.MATCH_PARENT,100);
+        LayoutParams layoutParams=new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
         this.setLayoutParams(layoutParams);
     }
     public CustomListItem(Context context,boolean withButton,int buttonType) {
@@ -31,8 +31,8 @@ public class CustomListItem extends LinearLayoutCompat {
         button=findViewById(R.id.right_Button);
         LayoutParams layoutParams=new LayoutParams(LayoutParams.MATCH_PARENT,100);
         this.setLayoutParams(layoutParams);
-        setButtonVisibility(withButton);
         button.setType(buttonType,null);
+        setButtonVisibility(withButton);
 
     }
 

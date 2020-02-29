@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         vec.add(tarihbutton);
         vec.add(tarihbutton);
         listview.setDataSet(vec);
-        listview.setSelectionType(UyumList.MULTIPLE_SELECTION);
+        //listview.setSelectionType(UyumList.MULTIPLE_SELECTION);
         listview.setFieldToShow("title");
         //tarihbutton.setEditText(editText);
 
@@ -291,7 +291,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(CustomListItem itemView,int position) {
                 listview.setButtonType(position,UyumConstants.ButtonTypes.NO_BUTTON);
-                Vector<Integer> vec=new Vector<>(listview.getButtonTypes());
                 //itemView.setButtonType(UyumConstants.ButtonTypes.INDIR);
                 //notify etmek gerekiyor
             }
