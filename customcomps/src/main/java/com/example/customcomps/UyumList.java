@@ -46,8 +46,11 @@ public class UyumList<T> extends LinearLayoutCompat {
         recyclerView.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new MyAdapter(new Vector<>());
-        recyclerView.setAdapter(adapter);
+
+
+        int selectionType=0;
+        int buttonType=3;
+        boolean itemsWithButton=false;
 
         TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.UyumList);
         try{
@@ -56,21 +59,33 @@ public class UyumList<T> extends LinearLayoutCompat {
                 int attr=typedArray.getIndex(i);
 
                 if(attr==R.styleable.UyumList_Selectable){
-                    setSelectionType(typedArray.getInt(attr,1));
+                    selectionType=typedArray.getInt(attr,1);
                 }else if(attr==R.styleable.UyumList_Button_Type){
-                    setButtonTypeForAll(typedArray.getInt(attr,3));
+                    buttonType=typedArray.getInt(attr,3);
+                }else if(attr==R.styleable.UyumList_ItemsWithButton){
+                    itemsWithButton=typedArray.getBoolean(attr,false);
                 }
 
             }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
+
             typedArray.recycle();
         }
+        adapter=new MyAdapter(new Vector<>(),selectionType,itemsWithButton,buttonType);
+        recyclerView.setAdapter(adapter);
+
     }
     public void setDataSet(List<T> dataSetList){
         adapter.setDataSet(dataSetList);
     }
+    public void setDataSet(List<T> dataSetList,int buttonType){
+        adapter.setDataSet(dataSetList,buttonType);
+    }
+
+    List<T> getDataSet(){return adapter.getDataSet();}
+
 
     public void addData(T data){
         adapter.addData(data);
@@ -84,16 +99,21 @@ public class UyumList<T> extends LinearLayoutCompat {
         adapter.deleteData(position);
     }
 
-    public void setItemOnClickListener(View.OnClickListener listener){
+    public void setItemOnClickListener(UyumList.ItemOnClickListener listener){
         adapter.setItemOnClickListener(listener);
     }
-
+    public void setButtonOnClickListener(UyumList.ItemOnClickListener listener){
+        adapter.setButtonOnClickListener(listener);
+    }
     public T getSelectedObject(){
         return adapter.getSelectedObject();
     }
     public int getSelectedIndex(){
         return adapter.getSelectedIndex();
     }
+    public List<Integer> getSelectedIndices(){return adapter.getSelectedIndices();}
+
+    public List<Integer> getButtonTypes(){return adapter.getButtonTypes();}
 
     public void setFieldToShow(String fieldName){
         adapter.setFieldToShow(fieldName);
@@ -102,11 +122,18 @@ public class UyumList<T> extends LinearLayoutCompat {
     public void setSelectionType(int type){
        adapter.setSelectionType(type);
     }
+    //set type to -1 for buttons to be invisible
     public void setButtonType(int position,int type){
         adapter.setButtonType(position,type);
     }
     public void setButtonTypeForAll(int type){
-        adapter.fillButtonTypes(type);
+        adapter.setButtonTypeForAll(type);
     }
 
+
+
+    public interface ItemOnClickListener{
+        void onClick(CustomListItem itemView,int position);
+
+    }
 }

@@ -1,7 +1,8 @@
 package com.example.customcomps.helpers;
 
 public class UyumConstants {
-    public class ButtonTypes{
+    public static class ButtonTypes{
+        public static final int NO_BUTTON=-1;
         public static final int EKLE=1;
         public static final int ASAGI_OK=2;
         public static final int SAG_OK=3;

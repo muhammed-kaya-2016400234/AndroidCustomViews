@@ -31,6 +31,7 @@
         <attr name="Label" format="string"/>
     </declare-styleable>
     <declare-styleable name="UyumList">
+        <attr name="ItemsWithButton" format="boolean"/>
         <attr name="Selectable" format="enum" >
             <enum name="No" value="0"/>
             <enum name="AllowSingleSelection" value="1"/>

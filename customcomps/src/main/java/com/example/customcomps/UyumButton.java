@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.example.customcomps.helpers.DateUtil;
+import com.example.customcomps.helpers.UyumConstants;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -172,10 +174,20 @@ public class UyumButton extends LinearLayoutCompat {
 
     }
 
+    /**
+     *
+     * @param type set -1 to make button visibility "gone"
+     * @param title
+     */
     public void setType(int type,String title){
-        this.type=type;
-        setMyIcon(null);
-        setTitle(title);
+        if(type== UyumConstants.ButtonTypes.NO_BUTTON) {
+            setVisibility(GONE);
+        }else {
+            setVisibility(VISIBLE);
+            this.type = type;
+            setMyIcon(null);
+            setTitle(title);
+        }
     }
 
     public void setImageOnly(boolean imageOnly){

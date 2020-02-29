@@ -12,8 +12,8 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 public class CustomListItem extends LinearLayoutCompat {
 
-    TextView textView;
-    UyumButton button;
+    public TextView textView;
+    public UyumButton button;
     public CustomListItem(Context context) {
         super(context);
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -33,6 +33,7 @@ public class CustomListItem extends LinearLayoutCompat {
         this.setLayoutParams(layoutParams);
         setButtonVisibility(withButton);
         button.setType(buttonType,null);
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -55,7 +56,6 @@ public class CustomListItem extends LinearLayoutCompat {
                 }
                 else if(attr==R.styleable.CustomListItem_TypeOfButton){
                     setButtonType(typedArray.getInt(attr,1));
-
                 }
 
             }
@@ -65,7 +65,6 @@ public class CustomListItem extends LinearLayoutCompat {
             typedArray.recycle();
         }
 
-
     }
     public void setButtonVisibility(boolean visible){
         if(visible)
@@ -73,6 +72,8 @@ public class CustomListItem extends LinearLayoutCompat {
         else
             button.setVisibility(GONE);
     }
+
+    //adapter için kullanıldıktan sonra notifyitemchanged çağrılması gerekir.
     public void setButtonType(int type){
         button.setType(type,null);
     }

@@ -66,13 +66,16 @@
             android:id="@+id/uyumList"
             android:layout_width="match_parent"
             android:layout_height="228dp"
-            app:Selectable="AllowSingleSelection" />
+            app:Selectable="AllowSingleSelection"
+            app:ItemsWithButton="true"
+            app:Button_Type="add"
+            />
 
         <com.example.customcomps.CustomListItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:TypeOfButton="add"
-            app:WithButton="true"/>
+            app:WithButton="false"/>
 
 
     </LinearLayout>

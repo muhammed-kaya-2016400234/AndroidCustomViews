@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.customcomps.CustomListItem;
+import com.example.customcomps.MyAdapter;
 import com.example.customcomps.UyumButton;
 import com.example.customcomps.UyumList;
 import com.example.customcomps.UyumSpinner;
@@ -189,13 +191,13 @@ public class MainActivity extends AppCompatActivity {
                 //Date d=tarihbutton.getSelectedDate();
                 //String date=tarihbutton.getSelectedDateString();
                 //btn.setType(UyumButton.TARIH,"ileri");
-                listview.setItemOnClickListener(new View.OnClickListener() {
+                listview.setItemOnClickListener(new UyumList.ItemOnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        TextView textView=(TextView)view;
-                        //Toast.makeText(getApplicationContext(),textView.getText(),Toast.LENGTH_LONG).show();
+                    public void onClick(CustomListItem itemView, int position) {
+                        //Toast.makeText(getApplicationContext(),itemView.textView.getText(),Toast.LENGTH_LONG).show();
                     }
                 });
+
                 //listview.deleteData(1);
                 //listview.insertData("gerge",1);
                 Object s=listview.getSelectedObject();
@@ -285,11 +287,19 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        listview.setItemOnClickListener(new View.OnClickListener() {
+        listview.setItemOnClickListener(new UyumList.ItemOnClickListener(){
             @Override
-            public void onClick(View view) {
-                CustomListItem view1=(CustomListItem)view;
-                view1.setButtonType(UyumConstants.ButtonTypes.INDIR);
+            public void onClick(CustomListItem itemView,int position) {
+                listview.setButtonType(position,UyumConstants.ButtonTypes.NO_BUTTON);
+                Vector<Integer> vec=new Vector<>(listview.getButtonTypes());
+                //itemView.setButtonType(UyumConstants.ButtonTypes.INDIR);
+                //notify etmek gerekiyor
+            }
+        });
+        listview.setButtonOnClickListener(new UyumList.ItemOnClickListener() {
+            @Override
+            public void onClick(CustomListItem itemView, int position) {
+                listview.setButtonType(position,UyumConstants.ButtonTypes.NO_BUTTON);
             }
         });
 
