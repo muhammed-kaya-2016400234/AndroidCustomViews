@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ public class UyumList<T> extends LinearLayoutCompat {
 
     public RecyclerView recyclerView;
     public RelativeLayout headerLayout;
-    public UyumButton clearButton;
+    public Button clearButton;
     public TextView titleTextView;
     public RecyclerView.LayoutManager layoutManager;
     public MyAdapter<T> adapter;
