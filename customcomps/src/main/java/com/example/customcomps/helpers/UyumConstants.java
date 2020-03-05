@@ -16,5 +16,6 @@ public class UyumConstants {
         public static final int AYARLAR=11;
         public static final int SINYAL=12;
         public static final int SIRALA=13;
+        public static final int CHECKBOX=14;
     }
 }

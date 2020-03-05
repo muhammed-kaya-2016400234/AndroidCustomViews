@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     UyumButton tarihbutton;
     EditText editText;
     UyumList<UyumButton> listview;
+    CustomListItem listItem;
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         tarihbutton=findViewById(R.id.myCustomButton13);
         editText=findViewById(R.id.editText);
         listview=findViewById(R.id.uyumList);
+        listItem=findViewById(R.id.listitem);
         /*Vector<Object> vec=new Vector<>();
         vec.add("ffrewr");
         vec.add("check");
@@ -200,93 +202,15 @@ public class MainActivity extends AppCompatActivity {
 
                 //listview.deleteData(1);
                 //listview.insertData("gerge",1);
-                Object s=listview.getSelectedObject();
-                listview.setSelectionType(UyumList.MULTIPLE_SELECTION);
-                Vector<UyumButton> vec=new Vector<>();
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                vec.add(btn);
-                listview.setDataSet(vec);
-                UyumButton b=listview.getSelectedObject();
-                listview.setButtonType(2,UyumConstants.ButtonTypes.AYARLAR);
-
+                //Object s=listview.getSelectedObject();
+                //listview.setSelectionType(UyumList.MULTIPLE_SELECTION);
+                //UyumButton b=listview.getSelectedObject();
+                //listview.setButtonType(2,UyumConstants.ButtonTypes.AYARLAR);
+                List<UyumButton> list=listview.getSelectedObjectsList();
+                list.size();
             }
         });
+        /*
         listview.setItemOnClickListener(new UyumList.ItemOnClickListener(){
             @Override
             public void onClick(CustomListItem itemView,int position) {
@@ -295,12 +219,15 @@ public class MainActivity extends AppCompatActivity {
                 //notify etmek gerekiyor
             }
         });
+
+         */
         listview.setButtonOnClickListener(new UyumList.ItemOnClickListener() {
             @Override
             public void onClick(CustomListItem itemView, int position) {
-                listview.setButtonType(position,UyumConstants.ButtonTypes.NO_BUTTON);
+                //listview.setButtonType(position,UyumConstants.ButtonTypes.NO_BUTTON);
             }
         });
+
 
 
 

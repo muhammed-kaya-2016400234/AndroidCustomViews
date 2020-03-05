@@ -6,20 +6,26 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
+
+import com.example.customcomps.helpers.UyumConstants;
 
 public class CustomListItem extends LinearLayoutCompat {
 
     public TextView textView;
     public UyumButton button;
+    public CheckBox checkBox;
+    int buttonType=-1;
     public CustomListItem(Context context) {
         super(context);
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v=mInflater.inflate(R.layout.custom_list_item_layout, this, true);
         textView=findViewById(R.id.list_item);
         button=findViewById(R.id.right_Button);
+        checkBox=findViewById(R.id.checkBox);
         LayoutParams layoutParams=new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
         this.setLayoutParams(layoutParams);
     }
@@ -29,6 +35,7 @@ public class CustomListItem extends LinearLayoutCompat {
         View v=mInflater.inflate(R.layout.custom_list_item_layout, this, true);
         textView=findViewById(R.id.list_item);
         button=findViewById(R.id.right_Button);
+        checkBox=findViewById(R.id.checkBox);
         LayoutParams layoutParams=new LayoutParams(LayoutParams.MATCH_PARENT,100);
         this.setLayoutParams(layoutParams);
         button.setType(buttonType,null);
@@ -44,6 +51,7 @@ public class CustomListItem extends LinearLayoutCompat {
         mInflater.inflate(R.layout.custom_list_item_layout, this, true);
         textView=findViewById(R.id.list_item);
         button=findViewById(R.id.right_Button);
+        checkBox=findViewById(R.id.checkBox);
 
         TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.CustomListItem);
         try{
@@ -55,7 +63,9 @@ public class CustomListItem extends LinearLayoutCompat {
                     setButtonVisibility(typedArray.getBoolean(attr,false));
                 }
                 else if(attr==R.styleable.CustomListItem_TypeOfButton){
+
                     setButtonType(typedArray.getInt(attr,1));
+
                 }
 
             }
@@ -67,14 +77,28 @@ public class CustomListItem extends LinearLayoutCompat {
 
     }
     public void setButtonVisibility(boolean visible){
-        if(visible)
-            button.setVisibility(VISIBLE);
-        else
+        if(visible) {
+            if(buttonType==UyumConstants.ButtonTypes.CHECKBOX)
+                checkBox.setVisibility(VISIBLE);
+            else
+                button.setVisibility(VISIBLE);
+        }
+        else {
+            checkBox.setVisibility(GONE);
             button.setVisibility(GONE);
+        }
     }
+
 
     //adapter için kullanıldıktan sonra notifyitemchanged çağrılması gerekir.
     public void setButtonType(int type){
-        button.setType(type,null);
+        buttonType=type;
+        if(type== UyumConstants.ButtonTypes.CHECKBOX){
+            button.setVisibility(GONE);
+            checkBox.setVisibility(VISIBLE);
+        }else {
+            button.setType(type, null);
+            checkBox.setVisibility(GONE);
+        }
     }
 }

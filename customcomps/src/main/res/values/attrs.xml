@@ -19,6 +19,7 @@
             <enum name="settings" value="11"/>
             <enum name="signal" value="12"/>
             <enum name="sort" value="13"/>
+            <enum name="CHECKBOX" value="0"/>
         </attr>
 
     </declare-styleable>
@@ -52,6 +53,7 @@
             <enum name="settings" value="11"/>
             <enum name="signal" value="12"/>
             <enum name="sort" value="13"/>
+            <enum name="CHECKBOX" value="14"/>
         </attr>
     </declare-styleable>
     <declare-styleable name="CustomListItem">
@@ -70,6 +72,7 @@
             <enum name="settings" value="11"/>
             <enum name="signal" value="12"/>
             <enum name="sort" value="13"/>
+            <enum name="CHECKBOX" value="14"/>
         </attr>
 
     </declare-styleable>

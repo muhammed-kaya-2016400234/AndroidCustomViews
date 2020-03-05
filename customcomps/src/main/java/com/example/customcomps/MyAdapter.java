@@ -3,6 +3,7 @@ package com.example.customcomps;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 
 import androidx.annotation.NonNull;
@@ -95,15 +96,46 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         if(itemsWithButton) {
             holder.customListItem.setButtonType(buttonTypes.get(position));
         }
-        if(selectable) {
+
             if ((!multipleSelection&&position == selectedPosition)||(multipleSelection&&selectedIndices.contains(position))) {
-                holder.customListItem.textView.setBackgroundColor(Color.LTGRAY);
-                holder.customListItem.textView.setTextColor(Color.WHITE);
+                if(selectable) {
+                    holder.customListItem.textView.setBackgroundColor(Color.LTGRAY);
+                    holder.customListItem.textView.setTextColor(Color.WHITE);
+                }
+                holder.customListItem.checkBox.setChecked(true);
             } else {
-                holder.customListItem.textView.setBackgroundResource(R.drawable.bottom_border);
-                holder.customListItem.textView.setTextColor(Color.GRAY);
+                if(selectable) {
+                    holder.customListItem.textView.setBackgroundResource(R.drawable.bottom_border);
+                    holder.customListItem.textView.setTextColor(Color.GRAY);
+                }
+                holder.customListItem.checkBox.setChecked(false);
             }
-        }
+
+
+        holder.customListItem.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(selectable) {
+                    if (multipleSelection) {
+                        if (!selectedIndices.contains(position))
+                            selectedIndices.add(position);
+                        else
+                            selectedIndices.remove((Object) position);
+                    } else {
+                        if (selectedPosition != position) {
+                            selectedPosition = position;
+                            selectedIndices.clear();
+                            selectedIndices.add(position);
+                        } else {
+                            selectedPosition = -1;
+                            selectedIndices.remove((Object) position);
+                        }
+                    }
+                    notifyDataSetChanged();
+                }
+                buttonListener.onClick(holder.customListItem,position);
+            }
+        });
         holder.customListItem.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,10 +156,9 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                             selectedIndices.remove((Object)position);
                         }
                     }
+                    notifyDataSetChanged();
                 }
-                notifyDataSetChanged();
                 listener.onClick(holder.customListItem,position);
-
 
             }
         });
@@ -139,6 +170,7 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 buttonListener.onClick(holder.customListItem,position);
             }
         });
+
 
 
 
@@ -160,6 +192,8 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         notifyDataSetChanged();
 
     }
+
+    //will not work if checkbox is used.
     void setButtonOnClickListener(UyumList.ItemOnClickListener listener){
         this.buttonListener=listener;
         notifyDataSetChanged();
@@ -211,9 +245,11 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     int getSelectedIndex(){
         return selectedPosition;
     }
+
     List<Integer> getSelectedIndices(){
         return selectedIndices;
     }
+
     void clearSelections(){
         selectedIndices.clear();
         selectedPosition=-1;
@@ -246,6 +282,11 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     void setButtonTypeForAll(int type){
+        if(type==UyumConstants.ButtonTypes.CHECKBOX) {
+            if (!selectable) {
+                setSelectionType(1);
+            }
+        }
         buttonTypes=new Vector<>();
         for(int i=0;i<dataSet.size();i++){
             buttonTypes.add(type);

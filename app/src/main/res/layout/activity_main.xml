@@ -60,23 +60,24 @@
             app:FieldToShow="field1"
             app:Label="deneme"
             app:MethodName="ArrInt"
-            app:WebServiceUrl="http://192.168.1.232/WebService1.asmx" />
+            app:WebServiceUrl="http://192.168.1.241/WebService1.asmx" />
 
         <com.example.customcomps.UyumList
             android:id="@+id/uyumList"
             android:layout_width="match_parent"
             android:layout_height="228dp"
-            app:Selectable="AllowSingleSelection"
+            app:Button_Type="CHECKBOX"
             app:ItemsWithButton="true"
-            app:Button_Type="add"
+            app:Selectable="AllowMultipleSelections"
 
-            />
+            app:ShowClearButton="true" />
 
         <com.example.customcomps.CustomListItem
+            android:id="@+id/listitem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:TypeOfButton="add"
-            app:WithButton="false"/>
+            app:TypeOfButton="CHECKBOX"
+            app:WithButton="true" />
 
 
     </LinearLayout>

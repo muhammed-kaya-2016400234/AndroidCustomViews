@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,6 +34,7 @@ public class UyumButton extends LinearLayoutCompat {
     public int type;
     public ImageView icon;
     public Button button;
+
     ArrayList<Drawable> drawables = new ArrayList<>();
 
 
@@ -46,6 +48,7 @@ public class UyumButton extends LinearLayoutCompat {
         mInflater.inflate(R.layout.button_layout,this,true);
         icon=findViewById(R.id.imageView);
         button=findViewById(R.id.button);
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -57,6 +60,7 @@ public class UyumButton extends LinearLayoutCompat {
         icon=findViewById(R.id.imageView);
         button=findViewById(R.id.button);
         editText=findViewById(R.id.editText);
+
         Calendar takvim = Calendar.getInstance();
         final int yil = takvim.get(Calendar.YEAR);
         final int ay = takvim.get(Calendar.MONTH);
@@ -182,7 +186,8 @@ public class UyumButton extends LinearLayoutCompat {
     public void setType(int type,String title){
         if(type== UyumConstants.ButtonTypes.NO_BUTTON) {
             setVisibility(GONE);
-        }else {
+        }
+        else {
             setVisibility(VISIBLE);
             this.type = type;
             setMyIcon(null);
