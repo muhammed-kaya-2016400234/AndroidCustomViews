@@ -1,11 +1,14 @@
 package com.example.customcomps;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.customcomps.helpers.WebServiceCall;
+
+import org.ksoap2.serialization.PropertyInfo;
+import org.ksoap2.serialization.SoapObject;
 
 import java.util.List;
 import java.util.Vector;
@@ -33,6 +41,13 @@ public class UyumList<T> extends LinearLayoutCompat {
     public TextView titleTextView;
     public RecyclerView.LayoutManager layoutManager;
     public MyAdapter<T> adapter;
+
+    public String WebServiceUrl;
+    public String Namespace="http://tempuri.org/";
+    public String MethodName;
+    public String FieldToShow;
+    public List<PropertyInfo> properties=new Vector<>();
+
     public UyumList(Context context) {
 
         super(context);
@@ -85,7 +100,6 @@ public class UyumList<T> extends LinearLayoutCompat {
                         titleTextView.setText(title);
                         showTitle=true;
                     }
-
                 }
 
             }
@@ -199,6 +213,48 @@ public class UyumList<T> extends LinearLayoutCompat {
     public void showClearButton(){
         headerLayout.setVisibility(VISIBLE);
         clearButton.setVisibility(VISIBLE);
+    }
+    public void setItemsFromWebService(){
+        clear();
+        @SuppressLint("StaticFieldLeak")
+        AsyncTask<String, Void, Vector<T>> asyncTask = new AsyncTask<String, Void, Vector<T>>() {
+
+            @Override
+            protected Vector<T> doInBackground(String... strings) {
+                Object response=WebServiceCall.call(WebServiceUrl,MethodName,Namespace,properties);
+                if(response!=null) {
+
+                    if (response instanceof SoapObject) {
+                        SoapObject obj = (SoapObject) response;
+
+                        for (int i = 0; i < obj.getPropertyCount(); i++) {
+                            Object o = obj.getProperty(i);
+                            if (o != null) {
+                                //web service modu için ayrı data listesi tut.
+                               // addData();
+                            }
+
+                        }
+
+                    }
+                    else{
+                      //  vector=(Vector<T>) response;
+
+
+
+                    }
+                }
+
+
+                return null;
+            }
+            protected void onPostExecute(Vector<T> result){
+                if(result!=null){
+
+                }
+            }
+        };
+        asyncTask.execute();
     }
 
     public interface ItemOnClickListener{
