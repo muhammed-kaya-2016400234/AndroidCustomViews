@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
@@ -16,8 +17,10 @@ import com.example.customcomps.helpers.UyumConstants;
 public class CustomListItem extends LinearLayoutCompat {
 
     public TextView textView;
+    public TextView subtext;
     public UyumButton button;
     public CheckBox checkBox;
+    public LinearLayout textLayout;
     int buttonType=-1;
     public CustomListItem(Context context) {
         super(context);
@@ -25,7 +28,9 @@ public class CustomListItem extends LinearLayoutCompat {
         View v=mInflater.inflate(R.layout.custom_list_item_layout, this, true);
         textView=findViewById(R.id.list_item);
         button=findViewById(R.id.right_Button);
+        subtext=findViewById(R.id.list_item_lower);
         checkBox=findViewById(R.id.checkBox);
+        textLayout=findViewById(R.id.textLayout);
         LayoutParams layoutParams=new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
         this.setLayoutParams(layoutParams);
     }
@@ -35,8 +40,10 @@ public class CustomListItem extends LinearLayoutCompat {
         View v=mInflater.inflate(R.layout.custom_list_item_layout, this, true);
         textView=findViewById(R.id.list_item);
         button=findViewById(R.id.right_Button);
+        subtext=findViewById(R.id.list_item_lower);
         checkBox=findViewById(R.id.checkBox);
-        LayoutParams layoutParams=new LayoutParams(LayoutParams.MATCH_PARENT,100);
+        textLayout=findViewById(R.id.textLayout);
+        LayoutParams layoutParams=new LayoutParams(LayoutParams.MATCH_PARENT,110);
         this.setLayoutParams(layoutParams);
         button.setType(buttonType,null);
         setButtonVisibility(withButton);
@@ -52,6 +59,8 @@ public class CustomListItem extends LinearLayoutCompat {
         textView=findViewById(R.id.list_item);
         button=findViewById(R.id.right_Button);
         checkBox=findViewById(R.id.checkBox);
+        subtext=findViewById(R.id.list_item_lower);
+        textLayout=findViewById(R.id.textLayout);
 
         TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.CustomListItem);
         try{

@@ -6,14 +6,35 @@
 
     >
 
-    <TextView
-        android:id="@+id/list_item"
+    <LinearLayout
+        android:id="@+id/textLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="11"
-        android:text="TextView"
-        android:textSize="17sp"
-        android:paddingLeft="10dp"/>
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/list_item"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:paddingLeft="10dp"
+            android:text="TextView"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/list_item_lower"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:paddingLeft="10dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            />
+    </LinearLayout>
 
     <com.example.customcomps.UyumButton
     android:id="@+id/right_Button"

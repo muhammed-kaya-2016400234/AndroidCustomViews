@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     UyumButton btn;
     UyumButton tarihbutton;
     EditText editText;
-    UyumList<UyumButton> listview;
+    UyumList<Integer> listview;
     CustomListItem listItem;
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -51,101 +51,34 @@ public class MainActivity extends AppCompatActivity {
         listview.setDataSet(vec);
 
          */
+        /*
         Vector<UyumButton> vec=new Vector<>();
         vec.add(btn);
         vec.add(btn);
-        vec.add(btn);
-        vec.add(btn);
-        vec.add(btn);
-        vec.add(btn);
-        vec.add(btn);
-        vec.add(btn);
-        vec.add(btn);
         vec.add(tarihbutton);
         vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        vec.add(tarihbutton);
-        listview.setDataSet(vec);
+
+
+
+
+
+        Vector<String > texts=new Vector<>();
+        texts.add("btn");
+        texts.add("btn2");
+        texts.add("btn3");
+        texts.add("btn4");
+
+        listview.setDataSet(vec,texts);
+
+         */
+
+        Vector<Integer> intvec=new Vector<>();
+        Vector<String> stvec=new Vector<>();
+        for(int i=0;i<20;i++){
+            intvec.add(i);
+            stvec.add("item"+i);
+        }
+        listview.setDataSet(intvec,stvec,stvec);
         //listview.setSelectionType(UyumList.MULTIPLE_SELECTION);
         listview.setFieldToShow("title");
         //tarihbutton.setEditText(editText);
@@ -206,8 +139,31 @@ public class MainActivity extends AppCompatActivity {
                 //listview.setSelectionType(UyumList.MULTIPLE_SELECTION);
                 //UyumButton b=listview.getSelectedObject();
                 //listview.setButtonType(2,UyumConstants.ButtonTypes.AYARLAR);
-                List<UyumButton> list=listview.getSelectedObjectsList();
+
+               /* List<Integer> vec=new Vector<>();
+                vec.add(1);
+                vec.add(4);
+                vec.add(5);
+                listview.setDataSet(vec);
+
+                */
+                List<Integer> list=listview.getSelectedObjectsList();
                 list.size();
+                //listview.clear();
+                listview.setTitle("Clicked");
+                listview.showClearButton();
+                listview.addData(4,"added","new");
+                sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        Toast.makeText(getApplicationContext(),"deneme123",Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
             }
         });
         /*

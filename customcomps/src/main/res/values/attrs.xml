@@ -23,6 +23,7 @@
         </attr>
 
     </declare-styleable>
+
     <declare-styleable name="UyumSpinner">
         <attr name="WebServiceUrl" format="string"/>
         <attr name="Namespace" format="string"/>
@@ -31,7 +32,9 @@
         <attr name="FieldToReturn" format="string"/>
         <attr name="Label" format="string"/>
     </declare-styleable>
+
     <declare-styleable name="UyumList">
+        <attr name="Title" format="string"/>
         <attr name="ItemsWithButton" format="boolean"/>
         <attr name="ShowClearButton" format="boolean"/>
         <attr name="Selectable" format="enum" >
@@ -56,6 +59,7 @@
             <enum name="CHECKBOX" value="14"/>
         </attr>
     </declare-styleable>
+
     <declare-styleable name="CustomListItem">
         <attr name="WithButton" format="boolean"/>
         <attr name="TypeOfButton" format="enum" >

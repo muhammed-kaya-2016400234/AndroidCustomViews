@@ -21,7 +21,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusableInTouchMode="true">
+
+        <com.example.customcomps.CustomListItem
+            android:id="@+id/listitem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:TypeOfButton="CHECKBOX"
+            app:WithButton="true" />
 
         <com.example.customcomps.UyumButton
             android:id="@+id/myCustomButton12"
@@ -55,30 +63,26 @@
         <com.example.customcomps.UyumSpinner
             android:id="@+id/uyumSpinner"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="74dp"
             app:FieldToReturn="field2"
             app:FieldToShow="field1"
-            app:Label="deneme"
+            app:Label="Başlık"
             app:MethodName="ArrInt"
-            app:WebServiceUrl="http://192.168.1.241/WebService1.asmx" />
+            app:WebServiceUrl="http://192.168.1.241/WebService1.asmx">
+
+        </com.example.customcomps.UyumSpinner>
 
         <com.example.customcomps.UyumList
             android:id="@+id/uyumList"
             android:layout_width="match_parent"
             android:layout_height="228dp"
-            app:Button_Type="CHECKBOX"
+            app:Button_Type="add"
             app:ItemsWithButton="true"
             app:Selectable="AllowMultipleSelections"
-
-            app:ShowClearButton="true" />
-
-        <com.example.customcomps.CustomListItem
-            android:id="@+id/listitem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:TypeOfButton="CHECKBOX"
-            app:WithButton="true" />
+            app:ShowClearButton="true"
+            app:Title="Başlık" />
 
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

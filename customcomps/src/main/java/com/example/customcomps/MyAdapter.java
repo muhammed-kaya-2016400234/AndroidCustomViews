@@ -28,6 +28,8 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private boolean itemsWithButton=false;
     private Vector<Integer> selectedIndices=new Vector<>();
     private Vector<Integer> buttonTypes=new Vector<>();
+    private Vector<String> itemTexts=new Vector<>();
+    private Vector<String> itemSubTexts=new Vector<>();
     private String fieldToShow;
     private int defaultButtonType= UyumConstants.ButtonTypes.SAG_OK;
     private UyumList.ItemOnClickListener listener=new UyumList.ItemOnClickListener(){
@@ -71,26 +73,11 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         String display="";
         boolean found=false;
         T item=dataSet.get(position);
-        Field[] fields = item.getClass().getFields();
-        if(!(item instanceof Integer||item instanceof String||item instanceof Double||item instanceof BigDecimal||item instanceof Date)) {
-            for (Field field : fields) {
-                if (field.getName().equals(fieldToShow)) {
-                    try {
-                        found = true;
-                        display = field.get(item).toString();
-
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                        display = "";
-                    }
-                }
-            }
-            if(found)
-                holder.customListItem.textView.setText(display);
-            else
-                holder.customListItem.textView.setText(item.toString());
-        }else{
-            holder.customListItem.textView.setText(item.toString());
+        if(dataSet.size()==itemTexts.size()){
+            holder.customListItem.textView.setText(itemTexts.get(position));
+            holder.customListItem.subtext.setText(itemSubTexts.get(position));
+        }else {
+            holder.customListItem.textView.setText(getFieldValue(item, fieldToShow));
         }
         //set button type
         if(itemsWithButton) {
@@ -99,15 +86,19 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
             if ((!multipleSelection&&position == selectedPosition)||(multipleSelection&&selectedIndices.contains(position))) {
                 if(selectable) {
-                    holder.customListItem.textView.setBackgroundColor(Color.LTGRAY);
+                    holder.customListItem.textLayout.setBackgroundColor(Color.LTGRAY);
                     holder.customListItem.textView.setTextColor(Color.WHITE);
+                    holder.customListItem.subtext.setTextColor(Color.WHITE);
+                }else{
+                    holder.customListItem.textLayout.setBackgroundResource(R.drawable.bottom_border);
                 }
                 holder.customListItem.checkBox.setChecked(true);
             } else {
                 if(selectable) {
-                    holder.customListItem.textView.setBackgroundResource(R.drawable.bottom_border);
-                    holder.customListItem.textView.setTextColor(Color.GRAY);
+                    holder.customListItem.textView.setTextColor(Color.BLACK);
+                    holder.customListItem.subtext.setTextColor(Color.GRAY);
                 }
+                holder.customListItem.textLayout.setBackgroundResource(R.drawable.bottom_border);
                 holder.customListItem.checkBox.setChecked(false);
             }
 
@@ -136,7 +127,7 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 buttonListener.onClick(holder.customListItem,position);
             }
         });
-        holder.customListItem.textView.setOnClickListener(new View.OnClickListener() {
+        holder.customListItem.textLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(selectable) {
@@ -204,16 +195,53 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         setButtonTypeForAll(defaultButtonType);
         notifyDataSetChanged();
     }
+    void setDataSet(List<T> dataSet,List<String> itemTexts,List<String> itemSubTexts){
+        this.dataSet=dataSet;
+        if(itemTexts!=null) {
+            this.itemTexts=new Vector<>(itemTexts);
+        }
+        if(itemSubTexts!=null&&itemSubTexts.size()==dataSet.size()){
+            this.itemSubTexts=new Vector<>(itemSubTexts);
+        }else{
+            this.itemSubTexts.clear();
+            for(int i=0;i<dataSet.size();i++)
+                this.itemSubTexts.add("");
+        }
+        setButtonTypeForAll(defaultButtonType);
+        notifyDataSetChanged();
+    }
+
     void setDataSet(List<T> dataSet,int buttonType){
         this.dataSet=dataSet;
+        this.itemTexts.clear();
+        this.itemSubTexts.clear();
         setButtonTypeForAll(buttonType);
         notifyDataSetChanged();
     }
     List<T> getDataSet(){
         return this.dataSet;
     }
+    void clear(){
+        dataSet.clear();
+        itemTexts.clear();
+        buttonTypes.clear();
+        selectedIndices.clear();
+        selectedPosition=-1;
+        notifyDataSetChanged();
+
+    }
     void addData(T data){
         dataSet.add(data);
+        buttonTypes.add(defaultButtonType);
+        notifyItemInserted(dataSet.size()-1);
+    }
+    void addData(T data,String text,String subtext){
+        dataSet.add(data);
+        itemTexts.add(text);
+        if(subtext!=null)
+            itemSubTexts.add(subtext);
+        else
+            itemSubTexts.add("");
         buttonTypes.add(defaultButtonType);
         notifyItemInserted(dataSet.size()-1);
     }
@@ -222,8 +250,20 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         buttonTypes.add(position,defaultButtonType);
         notifyItemInserted(position);
     }
+    void insertData(T data,String text,String subtext,int position){
+        dataSet.add(position,data);
+        itemTexts.add(position,text);
+        if(subtext!=null)
+            itemSubTexts.add(position,subtext);
+        else
+            itemSubTexts.add(position,"");
+        buttonTypes.add(position,defaultButtonType);
+        notifyItemInserted(position);
+    }
     void deleteData(int position){
         dataSet.remove(position);
+        itemTexts.remove(position);
+        itemSubTexts.remove(position);
         buttonTypes.remove(position);
         notifyItemRemoved(position);
     }
@@ -296,5 +336,23 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
     void setItemButtonVisibility(boolean visibility){
         itemsWithButton=visibility;
+    }
+
+    private String getFieldValue(T item,String fieldName){
+        Field[] fields = item.getClass().getFields();
+        if(!(item instanceof Integer||item instanceof String||item instanceof Double||item instanceof BigDecimal||item instanceof Date)) {
+            for (Field field : fields) {
+                if (field.getName().equals(fieldName)) {
+                    try {
+                      return field.get(item).toString();
+
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+
+                    }
+                }
+            }
+        }
+        return item.toString();
     }
 }
