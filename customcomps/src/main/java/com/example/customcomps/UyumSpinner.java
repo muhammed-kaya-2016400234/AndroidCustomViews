@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,7 +51,7 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
         LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mInflater.inflate(R.layout.spinner_layout,this,true);
         spinner=findViewById(R.id.spinner);
-        //labelTextView=findViewById(R.id.textView2);
+        labelTextView=findViewById(R.id.labelTextView);
     }
 
     public UyumSpinner(Context context, @Nullable AttributeSet attrs){
@@ -59,8 +60,10 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
         LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mInflater.inflate(R.layout.spinner_layout,this,true);
         spinner=findViewById(R.id.spinner);
-        //labelTextView=findViewById(R.id.textView2);
+        labelTextView=findViewById(R.id.labelTextView);
         TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.UyumSpinner);
+
+        boolean labeled=false;
         try{
             for(int i=0;i<typedArray.getIndexCount();i++){
                 int attr=typedArray.getIndex(i);
@@ -76,7 +79,11 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
                     FieldToReturn=typedArray.getString(attr);
                 }else if(attr==R.styleable.UyumSpinner_Label){
                     //spinner.setPrompt(typedArray.getString(attr));
-                    //labelTextView.setText(typedArray.getString(attr));
+                    String label=typedArray.getString(attr);
+                    if(label!=null) {
+                        labeled=true;
+                        labelTextView.setText(label);
+                    }
                 }
 
             }
@@ -85,6 +92,10 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
             e.printStackTrace();
         }finally {
             typedArray.recycle();
+        }
+
+        if(!labeled){
+            labelTextView.setVisibility(GONE);
         }
     }
 
@@ -158,6 +169,9 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
         CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
         T val=item.item;
         return DateUtil.getDate(val.toString());
+    }
+    public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener listener){
+        spinner.setOnItemSelectedListener(listener);
     }
 
 
