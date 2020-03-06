@@ -158,6 +158,15 @@ public class UyumList<T> extends LinearLayoutCompat {
         adapter.setDataSet(dataSetList,buttonType);
     }
 
+    //dataset ile aynı uzunlukta olmalı
+    public void setItemTexts(List<String> itemTexts){
+        adapter.setItemTexts(itemTexts);
+    }
+    //dataset ile aynı uzunlukta olmalı
+    public void setItemSubTexts(List<String> itemSubTexts){
+        adapter.setItemSubTexts(itemSubTexts);
+    }
+
     List<T> getDataSet(){return adapter.getDataSet();}
 
     public void clear(){
@@ -208,7 +217,7 @@ public class UyumList<T> extends LinearLayoutCompat {
     public List<T> getSelectedObjectsList(){
         return adapter.getSelectedObjectsList();
     }
-    public List<Object> getSelectedObjectsList(String fieldToReturn){
+    public List<Object> getSelectedObjectFieldsList(String fieldToReturn){
         if(fieldToReturn!=null){
             FieldToReturn=fieldToReturn;
         }
@@ -327,9 +336,7 @@ public class UyumList<T> extends LinearLayoutCompat {
             protected void onPostExecute(Vector<T> result){
                 if(result!=null&&result.size()>0){
                     Object o=result.get(0);
-                    if(o instanceof SoapPrimitive||o instanceof SoapObject){
-                        adapter.setDataSetForWebServiceMode(result);
-                    }
+                    adapter.setDataSet(result);
                 }
             }
         };

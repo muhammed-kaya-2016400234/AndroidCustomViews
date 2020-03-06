@@ -109,7 +109,7 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
     }
 
     //returned value should be cast to int,string etc.
-    public Object getSelectedObject(String fieldToReturn){
+    public Object getSelectedObjectField(String fieldToReturn){
         if(fieldToReturn!=null){
             FieldToReturn=fieldToReturn;
         }

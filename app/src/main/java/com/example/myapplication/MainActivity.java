@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 listview.addParameter("deneme12","a",PropertyInfo.STRING_CLASS);
                 listview.setItemsFromWebService();
 
-                List<Object> o=newlist.getSelectedObjectsList(null);
-                Object o2=sp.getSelectedObject(null);
+                List<Object> o=newlist.getSelectedObjectFieldsList(null);
+                Object o2=sp.getSelectedObjectField(null);
                 sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

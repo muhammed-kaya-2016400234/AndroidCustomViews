@@ -220,13 +220,23 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         setButtonTypeForAll(buttonType);
         notifyDataSetChanged();
     }
-
+/*
     void setDataSetForWebServiceMode(List<T> dataFromWebService){
         this.dataSet=new Vector<>(dataFromWebService);
         setButtonTypeForAll(defaultButtonType);
         notifyDataSetChanged();
     }
 
+ */
+
+    void setItemTexts(List<String> itemTexts){
+        this.itemTexts=new Vector<>(itemTexts);
+        notifyDataSetChanged();
+    }
+    void setItemSubTexts(List<String> itemSubTexts){
+        this.itemSubTexts=new Vector<>(itemSubTexts);
+        notifyDataSetChanged();
+    }
     List<T> getDataSet(){
         return this.dataSet;
     }
