@@ -1,6 +1,7 @@
 package com.example.customcomps.helpers;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -38,6 +39,24 @@ public class DateUtil {
 			e.printStackTrace();
 		}
 		return new Date(1900, 1, 1);
+	}
+
+	public static boolean isDateTime(String date) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+		try {
+			format.parse(date); // No declared exception, no need try-catch
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
+
+	}
+	public static String convertDate(Date date){
+		return dayFormat.format(date);
+	}
+	public static String convertDate(String date){
+		return dayFormat.format(getDate(date));
 	}
 	 
 	 public static String WebClear(String sData){

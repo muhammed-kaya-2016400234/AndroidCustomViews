@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.example.customcomps.helpers.DateUtil;
+import com.example.customcomps.helpers.MainHelper;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -23,7 +23,6 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -87,7 +86,9 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
                 }
 
             }
-            setItemsFromWebService();
+            if(WebServiceUrl!=null&&MethodName!=null) {
+                setItemsFromWebService();
+            }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -100,7 +101,7 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
     }
 
 
-    public Object getSelectedObject(){
+    public T getSelectedObject(){
        CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
        T val=item.item;
 
@@ -108,8 +109,14 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
     }
 
     //returned value should be cast to int,string etc.
-    public Object getSelectedObjectField(){
-
+    public Object getSelectedObject(String fieldToReturn){
+        if(fieldToReturn!=null){
+            FieldToReturn=fieldToReturn;
+        }
+        CustomSpinnerItem<T> sel=(CustomSpinnerItem<T>) spinner.getSelectedItem();
+        Object item=sel.item;
+        return MainHelper.getFieldValue(item,FieldToReturn);
+        /*
         if(FieldToReturn!=null){
             CustomSpinnerItem<T> sel=(CustomSpinnerItem<T>) spinner.getSelectedItem();
             Object item=sel.item;
@@ -132,51 +139,64 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
 
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
-                            return "";
+                            return null;
                         }
                     }
                 }
             }
         }
         return null;
+
+         */
     }
     public int getSelectedInt(){
         CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
         T val=item.item;
-        return Integer.parseInt(val.toString());
+        return MainHelper.getInt(val);
     }
     public String getSelectedString(){
         CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
         T val=item.item;
-        return val.toString();
+        return MainHelper.getString(val);
     }
     public boolean getSelectedBoolean(){
         CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
         T val=item.item;
-        return Boolean.parseBoolean(val.toString());
+        return MainHelper.getBoolean(val);
     }
     public double getSelectedDouble(){
         CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
         T val=item.item;
-        return Double.parseDouble(val.toString());
+        return MainHelper.getDouble(val);
     }
     public BigDecimal getSelectedBigDecimal(){
         CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
         T val=item.item;
-        return new BigDecimal(val.toString());
+        return MainHelper.getBigDecimal(val);
     }
     public Date getSelectedDate(){
         CustomSpinnerItem<T> item=(CustomSpinnerItem<T>) spinner.getSelectedItem();
         T val=item.item;
-        return DateUtil.getDate(val.toString());
+        return MainHelper.getDate(val);
     }
     public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener listener){
         spinner.setOnItemSelectedListener(listener);
     }
 
+    public void setDataSet(List<T> data){
+        if(data!=null){
+            Vector<CustomSpinnerItem> vector=new Vector<>();
+            for(T item:data){
+                CustomSpinnerItem<T> csi=new CustomSpinnerItem<>(item,FieldToShow);
+                vector.add(csi);
+            }
+            ArrayAdapter<CustomSpinnerItem> adapter=new ArrayAdapter<>(context,android.R.layout.simple_spinner_item,vector);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+        }
+    }
 
-
-    public void addParametersForWebServiceMethod(List<PropertyInfo> parameters){
+    public void addParameters(List<PropertyInfo> parameters){
         this.properties=parameters;
     }
     public void addParameter(PropertyInfo parameter){
@@ -188,6 +208,9 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
         pi.setName(paramName);
         pi.setType(paramClass);
         this.properties.add(pi);
+    }
+    public void clearParameters(){
+        this.properties=new Vector<>();
     }
     public void setItemsFromWebService(){
         setItemsFromWebService(WebServiceUrl,Namespace,MethodName,FieldToShow);
@@ -279,5 +302,8 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
             }
         };
         asyncTask.execute();
+    }
+    public void clear(){
+        setDataSet(new Vector<T>());
     }
 }

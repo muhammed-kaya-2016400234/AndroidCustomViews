@@ -24,12 +24,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:focusableInTouchMode="true">
 
-        <com.example.customcomps.CustomListItem
-            android:id="@+id/listitem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:TypeOfButton="CHECKBOX"
-            app:WithButton="true" />
 
         <com.example.customcomps.UyumButton
             android:id="@+id/myCustomButton12"
@@ -38,27 +32,6 @@
             android:text="com.example.customcomps.MyCustomButton"
             app:ButtonType="arrowdown" />
 
-        <com.example.customcomps.UyumButton
-            android:id="@+id/myCustomButton13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="com.example.customcomps.MyCustomButton"
-            app:ButtonType="date" />
-
-        <com.example.customcomps.UyumButton
-            android:id="@+id/myCustomButton14"
-            android:layout_width="63dp"
-            android:layout_height="wrap_content"
-            android:text="com.example.customcomps.MyCustomButton"
-            app:ButtonType="add"
-            app:ImageOnly="true" />
-
-        <com.example.customcomps.UyumButton
-            android:id="@+id/myCustomButton17"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="com.example.customcomps.MyCustomButton"
-            app:ButtonType="list" />
 
         <com.example.customcomps.UyumSpinner
             android:id="@+id/uyumSpinner"
@@ -67,7 +40,7 @@
             app:FieldToReturn="field2"
             app:FieldToShow="field1"
             app:Label="Başlık"
-            app:MethodName="ArrInt"
+            app:MethodName="DenemeParam"
             app:WebServiceUrl="http://192.168.1.241/WebService1.asmx">
 
         </com.example.customcomps.UyumSpinner>
@@ -77,11 +50,27 @@
             android:layout_width="match_parent"
             android:layout_height="228dp"
             app:Button_Type="add"
+            app:FieldOfObjectToReturn="field2"
             app:ItemsWithButton="true"
+            app:MethodNameForWS="ListString"
+            app:Selectable="AllowSingleSelection"
+            app:ShowClearButton="true"
+            app:Title="Başlık"
+            app:UrlForWS="http://192.168.1.241/WebService1.asmx" />
+
+        <com.example.customcomps.UyumList
+            android:id="@+id/uyumList2"
+            android:layout_width="match_parent"
+            android:layout_height="228dp"
+            app:Button_Type="add"
+            app:FieldOfObjectToReturn="field2"
+            app:FieldOfObjectToShow="field1"
+            app:ItemsWithButton="true"
+            app:MethodNameForWS="DenemeParam"
             app:Selectable="AllowMultipleSelections"
             app:ShowClearButton="true"
-            app:Title="Başlık" />
-
+            app:Title="Başlık"
+            app:UrlForWS="http://192.168.1.241/WebService1.asmx" />
 
     </LinearLayout>
 

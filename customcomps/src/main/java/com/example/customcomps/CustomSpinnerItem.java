@@ -1,12 +1,6 @@
 package com.example.customcomps;
 
-import androidx.annotation.NonNull;
-
-import org.ksoap2.serialization.PropertyInfo;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-
-import java.lang.reflect.Field;
+import com.example.customcomps.helpers.MainHelper;
 
 public class CustomSpinnerItem<T> {
 
@@ -19,43 +13,6 @@ public class CustomSpinnerItem<T> {
 
 
     public String toString(){
-
-        if(item instanceof SoapObject){
-            if(fieldname!=null){
-                SoapObject element = (SoapObject) item;
-                for (int i = 0; i < element.getPropertyCount(); i++) {
-                    PropertyInfo propertyInfo = element.getPropertyInfo(i);
-                    if (propertyInfo.name.equals(fieldname)) {
-                        return propertyInfo.getValue().toString();
-                    }
-                }
-            }
-        }else if(item instanceof SoapPrimitive){
-            return item.toString();
-        }
-        else {
-            if (fieldname != null) {
-
-                Field[] fields = item.getClass().getFields();
-                for (Field field : fields) {
-                    if (field.getName().equals(fieldname)) {
-                        try {
-                            return field.get(item).toString();
-
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                            return "";
-                        }
-                    }
-                }
-                /*
-
-
-                 */
-            }
-        }
-        String retval=item.toString();
-            return retval;
-
+        return MainHelper.getFieldValueString(item,fieldname);
     }
 }

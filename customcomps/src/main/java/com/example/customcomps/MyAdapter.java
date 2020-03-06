@@ -3,17 +3,14 @@ package com.example.customcomps;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.customcomps.helpers.UyumConstants;
+import com.example.customcomps.helpers.MainHelper;
 
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -31,11 +28,10 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Vector<String> itemTexts=new Vector<>();
     private Vector<String> itemSubTexts=new Vector<>();
     private String fieldToShow;
+
     private int defaultButtonType= UyumConstants.ButtonTypes.SAG_OK;
 
-    private boolean WebServiceMode=false;
 
-    private Vector<Object> dataFromWebService=new Vector<>();
 
     private UyumList.ItemOnClickListener listener=new UyumList.ItemOnClickListener(){
          @Override
@@ -77,12 +73,13 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         String display="";
         boolean found=false;
-        T item=dataSet.get(position);
+        T item = dataSet.get(position);
+
         if(dataSet.size()==itemTexts.size()){
             holder.customListItem.textView.setText(itemTexts.get(position));
             holder.customListItem.subtext.setText(itemSubTexts.get(position));
         }else {
-            holder.customListItem.textView.setText(getFieldValue(item, fieldToShow));
+            holder.customListItem.textView.setText(MainHelper.getFieldValueString(item, fieldToShow));
         }
         //set button type
         if(itemsWithButton) {
@@ -224,9 +221,10 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         notifyDataSetChanged();
     }
 
-    void setDataSetForWebServiceMode(List<Object> dataFromWebService){
-        WebServiceMode=true;
-        this.dataFromWebService=new Vector<>(dataFromWebService);
+    void setDataSetForWebServiceMode(List<T> dataFromWebService){
+        this.dataSet=new Vector<>(dataFromWebService);
+        setButtonTypeForAll(defaultButtonType);
+        notifyDataSetChanged();
     }
 
     List<T> getDataSet(){
@@ -292,7 +290,6 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return list;
     }
 
-
     int getSelectedIndex(){
         return selectedPosition;
     }
@@ -313,6 +310,7 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     void setFieldToShow(String fieldName){
         fieldToShow=fieldName;
     }
+
     void setSelectionType(int type){
         if(type==0){
             multipleSelection=false;
@@ -349,21 +347,5 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         itemsWithButton=visibility;
     }
 
-    private String getFieldValue(T item,String fieldName){
-        Field[] fields = item.getClass().getFields();
-        if(!(item instanceof Integer||item instanceof String||item instanceof Double||item instanceof BigDecimal||item instanceof Date)) {
-            for (Field field : fields) {
-                if (field.getName().equals(fieldName)) {
-                    try {
-                      return field.get(item).toString();
 
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-
-                    }
-                }
-            }
-        }
-        return item.toString();
-    }
 }

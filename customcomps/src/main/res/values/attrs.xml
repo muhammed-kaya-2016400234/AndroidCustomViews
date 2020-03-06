@@ -58,6 +58,11 @@
             <enum name="sort" value="13"/>
             <enum name="CHECKBOX" value="14"/>
         </attr>
+        <attr name="UrlForWS" format="string"/>
+        <attr name="NamespaceForWS" format="string"/>
+        <attr name="MethodNameForWS" format="string"/>
+        <attr name="FieldOfObjectToShow" format="string"/>
+        <attr name="FieldOfObjectToReturn" format="string"/>
     </declare-styleable>
 
     <declare-styleable name="CustomListItem">
