@@ -42,11 +42,14 @@ public class UyumList<T> extends LinearLayoutCompat {
     public RecyclerView.LayoutManager layoutManager;
     public MyAdapter<T> adapter;
 
+    public boolean WebServiceMode=false;
+
     public String WebServiceUrl;
     public String Namespace="http://tempuri.org/";
     public String MethodName;
     public String FieldToShow;
     public List<PropertyInfo> properties=new Vector<>();
+
 
     public UyumList(Context context) {
 
@@ -233,6 +236,7 @@ public class UyumList<T> extends LinearLayoutCompat {
                                 //web service modu için ayrı data listesi tut.
                                // addData();
                             }
+
 
                         }
 

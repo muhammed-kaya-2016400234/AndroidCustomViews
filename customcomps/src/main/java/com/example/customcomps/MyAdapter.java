@@ -32,6 +32,11 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Vector<String> itemSubTexts=new Vector<>();
     private String fieldToShow;
     private int defaultButtonType= UyumConstants.ButtonTypes.SAG_OK;
+
+    private boolean WebServiceMode=false;
+
+    private Vector<Object> dataFromWebService=new Vector<>();
+
     private UyumList.ItemOnClickListener listener=new UyumList.ItemOnClickListener(){
          @Override
          public void onClick(CustomListItem itemView, int position) {
@@ -218,6 +223,12 @@ public class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         setButtonTypeForAll(buttonType);
         notifyDataSetChanged();
     }
+
+    void setDataSetForWebServiceMode(List<Object> dataFromWebService){
+        WebServiceMode=true;
+        this.dataFromWebService=new Vector<>(dataFromWebService);
+    }
+
     List<T> getDataSet(){
         return this.dataSet;
     }
