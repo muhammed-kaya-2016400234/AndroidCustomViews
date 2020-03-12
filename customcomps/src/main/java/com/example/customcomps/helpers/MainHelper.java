@@ -41,6 +41,29 @@ public class MainHelper {
             return null;
         }
     }
+    public static Object call(String WebServiceUrl, String MethodName, String Namespace, List<PropertyInfo>properties,SoapSerializationEnvelope envelope){
+        if(Namespace==null||Namespace.equals("")){
+            Namespace="http://tempuri.org/";
+        }
+        envelope.dotNet = true;
+        SoapObject request = new SoapObject(Namespace, MethodName);
+        if(properties!=null) {
+            for (PropertyInfo info : properties) {
+                request.addProperty(info);
+            }
+        }
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(WebServiceUrl, 10000);
+        //androidHttpTransport.debug = true;
+        try {
+
+            androidHttpTransport.call(Namespace + MethodName, envelope);
+            return envelope.getResponse();
+        }catch (Exception e){
+            return null;
+        }
+    }
     /*
     public static String getFieldValue(Object item,String fieldName){
         if(item instanceof SoapObject){

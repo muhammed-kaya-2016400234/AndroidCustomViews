@@ -18,9 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.customcomps.helpers.MainHelper;
 
+import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -49,6 +51,7 @@ public class UyumList<T> extends LinearLayoutCompat {
     public String FieldToReturn;
     public List<PropertyInfo> properties=new Vector<>();
 
+    public SoapSerializationEnvelope soapEnvelope=new SoapSerializationEnvelope(SoapEnvelope.VER11);
 
     public UyumList(Context context) {
 
@@ -59,6 +62,7 @@ public class UyumList<T> extends LinearLayoutCompat {
         clearButton=findViewById(R.id.clearButton);
         titleTextView=findViewById(R.id.titleTextView);
         headerLayout=findViewById(R.id.headerLayout);
+
     }
 
 
@@ -75,6 +79,7 @@ public class UyumList<T> extends LinearLayoutCompat {
         recyclerView.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
+
 
 
         int selectionType=0;
@@ -307,7 +312,7 @@ public class UyumList<T> extends LinearLayoutCompat {
 
             @Override
             protected Vector<T> doInBackground(String... strings) {
-                Object response= MainHelper.call(WebServiceUrl,MethodName,Namespace,properties);
+                Object response= MainHelper.call(WebServiceUrl,MethodName,Namespace,properties,soapEnvelope);
                 Vector<T> vector=new Vector<>();
                 if(response!=null) {
 
@@ -324,6 +329,9 @@ public class UyumList<T> extends LinearLayoutCompat {
                         }
                     }
                     else{
+                        vector=(Vector<T>) response;
+
+                        //envelope addmapping fonksiyonu eklenecek.
 
                          //vector=(Vector<>) response;
 
@@ -335,7 +343,6 @@ public class UyumList<T> extends LinearLayoutCompat {
             }
             protected void onPostExecute(Vector<T> result){
                 if(result!=null&&result.size()>0){
-                    Object o=result.get(0);
                     adapter.setDataSet(result);
                 }
             }
@@ -360,6 +367,9 @@ public class UyumList<T> extends LinearLayoutCompat {
         this.properties=new Vector<>();
     }
 
+    public SoapSerializationEnvelope getSoapEnvelope(){
+        return soapEnvelope;
+    }
     public interface ItemOnClickListener{
         void onClick(CustomListItem itemView,int position);
 

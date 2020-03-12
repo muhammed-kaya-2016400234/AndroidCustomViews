@@ -13,7 +13,11 @@ import com.example.customcomps.CustomListItem;
 import com.example.customcomps.UyumButton;
 import com.example.customcomps.UyumList;
 import com.example.customcomps.UyumSpinner;
+import com.example.customcomps.helpers.MainHelper;
 import com.example.myapplication.models.ArrInt;
+import com.example.myapplication.models.InputObject;
+import com.example.myapplication.models.ListObject;
+import com.example.myapplication.models.ListString;
 import com.example.myapplication.models.WebService;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     UyumButton btn;
     UyumButton tarihbutton;
     EditText editText;
-    UyumList<SoapObject> listview;
+    UyumList<InputObject> listview;
     UyumList<SoapPrimitive> newlist;
     CustomListItem listItem;
     @SuppressLint("StaticFieldLeak")
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         listview=findViewById(R.id.uyumList);
         newlist=findViewById(R.id.uyumList2);
 
+        listview.addParameter("wefwr","a",PropertyInfo.STRING_CLASS);
         Vector<Integer> intvec=new Vector<>();
         Vector<String> stvec=new Vector<>();
         for(int i=0;i<20;i++){
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             stvec.add("item"+i);
         }
 
-        listview.setFieldToShow("title");
+        //listview.setFieldToShow("title");
 
         sp=findViewById(R.id.uyumSpinner);
 
@@ -88,10 +93,12 @@ public class MainActivity extends AppCompatActivity {
                         //Toast.makeText(getApplicationContext(),itemView.textView.getText(),Toast.LENGTH_LONG).show();
                     }
                 });
-                listview.addParameter("deneme12","a",PropertyInfo.STRING_CLASS);
-                listview.setItemsFromWebService();
+                //listview.clearParameters();
+                //listview.addParameter("deneme12","a",PropertyInfo.STRING_CLASS);
+                //listview.setItemsFromWebService();
 
                 List<Object> o=newlist.getSelectedObjectFieldsList(null);
+                InputObject lo=listview.getSelectedObject();
                 Object o2=sp.getSelectedObjectField(null);
                 sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -108,11 +115,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /////////////////////////////////////////////////////////////
+        //ListObject.addMappings(listview.getSoapEnvelope());
+        //listview.setItemsFromWebService();
+        /////////////////////////////////////////////////////////////
+
+        final WebService ws=new WebService("http://192.168.1.241/WebService1.asmx");
+        AsyncTask<String, Void, Vector<InputObject>> asyncTask = new AsyncTask<String, Void, Vector<InputObject>>() {
+
+            @Override
+            protected Vector<InputObject> doInBackground(String... strings) {
 
 
-
-
-
+                try {
+                    return new Vector<>(ws.ListObject());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return new Vector<>();
+            }
+            protected void onPostExecute(Vector<InputObject> result){
+               listview.setDataSet(result);
+            }
+        };
+        asyncTask.execute();
 
 
     }

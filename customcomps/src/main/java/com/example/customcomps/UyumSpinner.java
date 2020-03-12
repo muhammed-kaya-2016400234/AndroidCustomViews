@@ -230,68 +230,35 @@ public class UyumSpinner<T> extends LinearLayoutCompat {
         @SuppressLint("StaticFieldLeak")
         AsyncTask<String, Void, Vector<CustomSpinnerItem>> asyncTask = new AsyncTask<String, Void, Vector<CustomSpinnerItem>>() {
 
-
             @Override
             protected Vector<CustomSpinnerItem> doInBackground(String... params) {
 
+                    Vector<CustomSpinnerItem> vector=new Vector<>();
 
-                envelope.dotNet = true;
-                SoapObject request = new SoapObject(Namespace, MethodName);
-                for(PropertyInfo info:properties){
-                    request.addProperty(info);
-                }
-                envelope.setOutputSoapObject(request);
-
-                HttpTransportSE androidHttpTransport = new HttpTransportSE(WebServiceUrl, 10000);
-                //androidHttpTransport.debug = true;
-                Vector<CustomSpinnerItem> vector=new Vector<>();
-                try{
-
-                    androidHttpTransport.call(Namespace+MethodName, envelope);
-                    Object response=envelope.getResponse();
+                    Object response=MainHelper.call(WebServiceUrl,MethodName,Namespace,properties,envelope);
                     if(response!=null){
 
                         if(response instanceof SoapObject){
-                            SoapObject obj=(SoapObject) envelope.getResponse();
+                            SoapObject obj=(SoapObject) response;
                             if(obj!=null){
-
-
                                 for(int i=0;i<obj.getPropertyCount();i++){
                                     Object o=obj.getProperty(i);
                                     if(o!=null) {
-
                                         CustomSpinnerItem<Object> item = new CustomSpinnerItem<>(o, FieldToShow);
                                         vector.add(item);
                                     }
-
                                 }
-
                             }
-
                         }
-
                         else{
-                            Vector<T> obj=(Vector<T>) envelope.getResponse();
+                            Vector<T> obj=(Vector<T>) response;
                             for(T o : obj){
                                 CustomSpinnerItem<T> item=new CustomSpinnerItem<>(o,FieldToShow);
                                 vector.add(item);
                             }
-
-
                         }
                     }
-
-
                     return vector;
-
-                }
-                catch (Exception exception) {
-
-                    exception.printStackTrace();
-
-                    return null;
-                }
-
             }
             protected void onPostExecute(Vector<CustomSpinnerItem> result){
                 if(result!=null){
