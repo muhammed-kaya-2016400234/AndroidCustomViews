@@ -21,6 +21,7 @@
             <enum name="sort" value="13"/>
             <enum name="CHECKBOX" value="0"/>
         </attr>
+        <attr name="ImageDrawable" format="integer"/>
 
     </declare-styleable>
 
@@ -84,6 +85,19 @@
             <enum name="CHECKBOX" value="14"/>
         </attr>
 
+    </declare-styleable>
+
+    <declare-styleable name="UyumEditText">
+        <attr name="TextType" format="enum" >
+            <enum name="EMail" value="1"/>
+            <enum name="Phone" value="2"/>
+            <enum name="Name" value="3"/>
+            <enum name="Date" value="4"/>
+            <enum name="Password" value="5"/>
+            <enum name="TCKN" value="6"/>
+
+        </attr>
+        <attr name="Placeholder" format="string"/>
     </declare-styleable>
 
 </resources>

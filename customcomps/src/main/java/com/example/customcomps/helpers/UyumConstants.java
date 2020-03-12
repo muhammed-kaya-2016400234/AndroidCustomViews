@@ -18,4 +18,13 @@ public class UyumConstants {
         public static final int SIRALA=13;
         public static final int CHECKBOX=14;
     }
+
+    public static class EditTextTypes{
+        public static final int EMail=1;
+        public static final int Phone=2;
+        public static final int Name=3;
+        public static final int Date=4;
+        public static final int Password=5;
+        public static final int TCKN=6;
+    }
 }

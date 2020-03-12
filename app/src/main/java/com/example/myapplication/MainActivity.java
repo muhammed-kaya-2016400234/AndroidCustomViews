@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         editText=findViewById(R.id.editText);
         listview=findViewById(R.id.uyumList);
-        newlist=findViewById(R.id.uyumList2);
+
 
         listview.addParameter("wefwr","a",PropertyInfo.STRING_CLASS);
         Vector<Integer> intvec=new Vector<>();
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 //listview.addParameter("deneme12","a",PropertyInfo.STRING_CLASS);
                 //listview.setItemsFromWebService();
 
-                List<Object> o=newlist.getSelectedObjectFieldsList(null);
+                //List<Object> o=newlist.getSelectedObjectFieldsList(null);
                 InputObject lo=listview.getSelectedObject();
                 Object o2=sp.getSelectedObjectField(null);
                 sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

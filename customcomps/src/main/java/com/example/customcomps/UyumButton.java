@@ -104,6 +104,7 @@ public class UyumButton extends LinearLayoutCompat {
             }
         });
 
+        /*
         Field[] drawablesFields =R.drawable.class.getFields();
 
 
@@ -115,8 +116,12 @@ public class UyumButton extends LinearLayoutCompat {
             }
         }
 
+         */
+
         TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.UyumButton);
         try{
+
+            boolean drawableGiven=false;
             for(int i=0;i<typedArray.getIndexCount();i++){
 
                 int attr=typedArray.getIndex(i);
@@ -127,10 +132,16 @@ public class UyumButton extends LinearLayoutCompat {
                 }
                 else if(attr==R.styleable.UyumButton_ButtonType){
                      type=typedArray.getInt(attr,1);
-                     setMyIcon(null);
+                     if(!drawableGiven)
+                        setMyIcon(null);
                 }
                 else if(attr==R.styleable.UyumButton_ImageOnly){
                     setImageOnly(typedArray.getBoolean(attr,false));
+                }
+                else if(attr==R.styleable.UyumButton_ImageDrawable){
+                    drawableGiven=true;
+                    setMyIcon(typedArray.getDrawable(attr));
+                    //setMyIcon(getResources().getDrawable(typedArray.getInt(attr,R.drawable.add)));
                 }
             }
         }catch (Exception e){
