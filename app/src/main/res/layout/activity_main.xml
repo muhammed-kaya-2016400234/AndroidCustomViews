@@ -51,11 +51,12 @@
         <com.example.customcomps.UyumEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:TextType="Phone" />
+            app:TextType="EMail" />
 
         <com.example.customcomps.UyumEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:TextType="Phone" />
 
         <com.example.customcomps.UyumList
             android:id="@+id/uyumList"
